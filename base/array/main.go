@@ -78,4 +78,10 @@ func main() {
 		fmt.Println(e.Value)
 	}
 
+	var array = [10]byte{'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'}
+	aSlice := array[3:7:8]  // aSlice包含元素: d,e,f,g，len=4，cap=7
+	bSlice := aSlice[0:5] // 对slice的slice可以在cap范围内扩展，此时bSlice包含：d,e,f,g,h
+	fmt.Println(array)
+	fmt.Println(aSlice)
+	fmt.Println(bSlice)
 }
