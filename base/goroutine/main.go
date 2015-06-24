@@ -80,29 +80,50 @@ func test3() {
 }
 func main() {
 	runtime.GOMAXPROCS(4)
-//	fmt.Println("Learning goroutine")
-//	num := 5
-//	cs := make(chan *int, num)
-//	for i := 0; i < num; i++ {
-//		go test(cs, i)
-//	}
-//	for i := 0; i < num; i++ {
-//		fmt.Println(*<-cs)
-//	}
+	//	fmt.Println("Learning goroutine")
+	//	num := 5
+	//	cs := make(chan *int, num)
+	//	for i := 0; i < num; i++ {
+	//		go test(cs, i)
+	//	}
+	//	for i := 0; i < num; i++ {
+	//		fmt.Println(*<-cs)
+	//	}
 
-//	pings := make(chan string, 1)
-//	pongs := make(chan string, 1)
-//	ping(pings, "passed message")
-//	pong(pings, pongs)
-//	fmt.Println(<-pongs)
-//	test3()
-	queue:=make(chan string,2)
-	queue<-"one"
-	queue<-"two"
-	fmt.Println(<-queue)
-	queue<-"three"
-	close(queue)
-	for elem:=range queue{
-		fmt.Println(elem)
+	//	pings := make(chan string, 1)
+	//	pongs := make(chan string, 1)
+	//	ping(pings, "passed message")
+	//	pong(pings, pongs)
+	//	fmt.Println(<-pongs)
+	//	test3()
+//	queue := make(chan string, 2)
+//	queue <- "one"
+//	queue <- "two"
+//	fmt.Println(<-queue)
+//	queue <- "three"
+//	close(queue)
+//	for elem := range queue {
+//		fmt.Println(elem)
+//	}
+	challengedRank := 1989
+	gainStone := 0
+	rise:=7
+	switch {
+	case challengedRank < 20:
+		gainStone = rise * 50
+	case challengedRank < 100:
+		gainStone = rise * 10
+	case challengedRank < 500:
+		gainStone = rise * 3
+	case challengedRank < 1000:
+		gainStone = rise * 1
+	case challengedRank < 2000: //宝石数量都是整数，所以获得1.2个算两个
+		f := float32(rise) * 0.2
+		if rise%5 > 0 {
+			gainStone = int(f) + 1
+		} else {
+			gainStone = int(f)
+		}
 	}
+	fmt.Println(gainStone)
 }

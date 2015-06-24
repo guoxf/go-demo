@@ -12,8 +12,7 @@ type User struct {
 	Name string
 	Age  int
 }
-
-func main() {
+func test1(){
 	conn, err := redis.DialTimeout("tcp", "127.0.0.1:6379", 0, 1*time.Second, 1*time.Second)
 	defer conn.Close()
 	if err != nil {
@@ -58,4 +57,45 @@ func main() {
 	} else {
 		fmt.Println(err)
 	}
+}
+func main() {
+	conn, err := redis.DialTimeout("tcp", "127.0.0.1:6379", 0, 1*time.Second, 1*time.Second)
+	defer conn.Close()
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+//	values:=make([]interface{},0,6)
+//	values=append(values,"rank")
+//	values=append(values,1,15,2,9)
+//	reply,err:=conn.Do("ZADD",values...)
+//	fmt.Println(reply,err)
+//	a:=[]int{1,2,3}
+//	str,_:=json.Marshal(&a)
+//	conn.Do("hset","user:125:baseInfo","fieldingHeros",str)
+	
+//	values:=make([]interface{},0)
+//	values=append(values,"ladderRank",23,352,24,125)
+//	fmt.Println(values)
+//	conn.Do("zadd",values...)
+	
+	reply, err := redis.Values(conn.Do("ZRANGEBYSCORE", "ladderRank", 24, 24))
+	if err != nil && err != redis.ErrNil {
+		fmt.Println("Failed GetPlayerByLadderRank", err)
+	}
+	if len(reply)==0{
+		fmt.Println(reply)
+		return
+	}
+	uid,err:=redis.Int(reply[0],nil)
+	if err!=nil{
+		fmt.Println(err)
+	}
+	fmt.Println("Uid=",uid)
+	
+	score, err := redis.Int(conn.Do("ZSCORE", "combatRank", uid))
+	if err != nil && err != redis.ErrNil {
+		fmt.Println(fmt.Sprintf("Error：Get player score by uid %d", uid), err)
+	}
+	fmt.Println(score)
 }

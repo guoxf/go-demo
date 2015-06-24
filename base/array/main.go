@@ -2,10 +2,37 @@ package main
 
 import (
 	"container/list"
+	"encoding/json"
 	"fmt"
 )
-
-func main() {
+type Player struct{
+	Name string
+	Uid int
+}
+func TestStructToString()[]byte{
+	player:=Player{"Player1",123}
+	result,_:=json.Marshal(&player)
+	return result
+}
+func testJsonToStruct(msg []byte){
+	player:=Player{}
+	json.Unmarshal(msg,&player)
+	fmt.Println(player)
+}
+func testMapToString()[]byte{
+	player:=make(map[string]interface{})
+	player["Name"]="Player1"
+	player["Uid"]=123
+	result,_:=json.Marshal(&player)
+	
+	return result
+}
+func testJsonToMap(msg []byte){
+	player:=make(map[string]interface{})
+	json.Unmarshal(msg,&player)
+	fmt.Println(player)
+}
+func testArray(){
 	fmt.Println("Learning Array slice map!")
 	fmt.Println("第一种声明方式")
 	var array1 []string
@@ -84,4 +111,21 @@ func main() {
 	fmt.Println(array)
 	fmt.Println(aSlice)
 	fmt.Println(bSlice)
+}
+
+func main() {
+//	msg1:=TestStructToString()
+//	fmt.Println(string(msg1))
+//	msg2:=testMapToString()
+//	fmt.Println(string(msg2))
+//	testJsonToStruct(msg1)
+//	testJsonToMap(msg2)
+//	f:=0.8
+//	fmt.Println(int(f))
+//	fmt.Println(7%5)
+	fmt.Println("\xe7\x83\xad\xe6\xb0\x94\xe7\x90\x83\xe5\xb2\x91\xe5\xa8\x81")
+	a:=[]int{1,2,3}
+	b:=make([]int,3)
+	copy(b,a[0:2])
+	fmt.Println(b)
 }
