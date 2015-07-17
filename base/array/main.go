@@ -4,6 +4,7 @@ import (
 	"container/list"
 	"encoding/json"
 	"fmt"
+	"time"
 )
 type Player struct{
 	Name string
@@ -123,9 +124,14 @@ func main() {
 //	f:=0.8
 //	fmt.Println(int(f))
 //	fmt.Println(7%5)
-	fmt.Println("\xe7\x83\xad\xe6\xb0\x94\xe7\x90\x83\xe5\xb2\x91\xe5\xa8\x81")
+	fmt.Println("\xe5\xba\x97\xe5\x91\x98\xe5\xbc\xa0\xe8\xbe\xbe")
 	a:=[]int{1,2,3}
 	b:=make([]int,3)
 	copy(b,a[0:2])
 	fmt.Println(b)
+	r:=[]rune("\xe5\xba\x97\xe5\x91\x98\xe5\xbc\xa0\xe8\xbe\xbe q")
+	fmt.Println(len(r))
+	fmt.Println(len("11111111111111111111111111111111111111111111111111111111111111111"))
+	fmt.Println(len("不知道你在说什么阿啊阿啊阿啊阿啊阿啊AA阿啊阿啊阿啊阿啊阿啊啊阿啊阿啊"))
+	fmt.Println(time.Now().Unix())
 }

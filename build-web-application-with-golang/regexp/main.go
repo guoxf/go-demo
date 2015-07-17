@@ -99,8 +99,12 @@ func expand(){
 	}
 	fmt.Println(string(res))
 }
+func getUid(key string)(string){
+	re,_:=regexp.Compile("[0-9]+")
+	return re.FindString(key)
+}
 func main(){
 //	fmt.Println(IsIp("992.168.1.2"))
 //	spider()
-	expand()
+	fmt.Println(getUid("user:352:baseInfo1222"))
 }

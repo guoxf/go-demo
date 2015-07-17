@@ -83,4 +83,21 @@ func main(){
 		fmt.Println("Failed dial hub", err)
 	}
 	fmt.Println(hubconn.Close())
+	str:=`{"ID":1,"PurchaseAddr":"0.0.0.0:15555","Platform":"test:server","GSName":"Test","DBDatabase":"zone","DBHost":"42.62.67.240:3306","DBPasswd":"feixiongtech_mysql","DBUser":"root","GSRedisAddr":"0.0.0.0:6379","GSRedisDB":0}`
+	var gs GSInfo
+	json.Unmarshal([]byte(str),&gs)
+	fmt.Println(gs)
+}
+type GSInfo struct {
+	ID           int
+	PurchaseAddr string
+	Platform     string
+	GSName       string
+	DBDatabase   string
+	DBHost       string
+	DBPasswd     string
+	DBUser       string
+	GSRedisAddr  string
+	GSRedisDB    int
+	Sess *BackEntity
 }

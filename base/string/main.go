@@ -1,6 +1,7 @@
 package main
 
 import (
+	"time"
 	"errors"
 )
  import(
@@ -60,4 +61,8 @@ func main(){
 	for i,v:=range msg.Lists{
 		fmt.Println(i,v)
 	}
+	thisDate:="2015-07-17"
+	fDate:="2006-01-02"
+	date,err:=time.Parse(fDate,thisDate)
+	fmt.Println(date,err,date.Unix())
 }
