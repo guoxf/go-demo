@@ -18,6 +18,34 @@ import (
   'sig' => '57a588c6a0002ee94a69a07ac308a8d7',
 */
 func main(){
+	testXDCharge()
+}
+
+func testXDCharge(){
+	v:=make(map[string]string)
+	v["Gold"]="30"
+	v["Ext"]="com.jmsg.30000glod"
+	v["Order_id"]="100005158_4856156_1436371251_4021"
+	v["App_id"]="2"
+	v["Timestamp"]="1436371260"
+	v["User_id"]="32715258"
+	v["sign"]="5774c06097d22e7519a449c8d97289a4"
+	v["sig"]="57a588c6a0002ee94a69a07ac308a8d7"
+	b,_:=json.Marshal(v)
+	body := ioutil.NopCloser(strings.NewReader(string(b))) //把form数据编下码
+	client := &http.Client{}
+	req,_:=http.NewRequest("POST","http://42.62.67.240:8892/test/chargeNotify",body)
+	req.Header.Set("Content-Type", "application/x-www-form-urlencoded; param=value") //这个一定要加，不加form的值post不过去，被坑了两小时
+	fmt.Printf("%+v\n", req)                                                         //看下发送的结构
+	
+	resp, err := client.Do(req) //发送
+	fmt.Println(err)
+	defer resp.Body.Close()     //一定要关闭resp.Body
+	data, _ := ioutil.ReadAll(resp.Body)
+	fmt.Println(string(data), err)
+}
+
+func testXYCharge(){
 	v:=make(map[string]string)
 	v["amount"]="0.01"
 	v["extra"]="com.jmsg.3000gold"
