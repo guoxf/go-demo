@@ -18,17 +18,17 @@ import (
   'sig' => '57a588c6a0002ee94a69a07ac308a8d7',
 */
 func main(){
-	testCrash()
+	testXDCharge()
 }
 
 func testXDCharge(){
 	v:=make(map[string]string)
-	v["Gold"]="30"
-	v["Ext"]="com.jmsg.30000glod"
+	v["Gold"]="388"
+	v["Ext"]="com.jmsg.4500stone"
 	v["Order_id"]="100005158_4856156_1436371251_4021"
 	v["App_id"]="2"
 	v["Timestamp"]="1436371260"
-	v["User_id"]="32715258"
+	v["User_id"]="32743973"
 	v["sign"]="5774c06097d22e7519a449c8d97289a4"
 	v["sig"]="57a588c6a0002ee94a69a07ac308a8d7"
 	b,_:=json.Marshal(v)

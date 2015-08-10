@@ -6,34 +6,36 @@ import (
 	"fmt"
 	"time"
 )
-type Player struct{
+
+type Player struct {
 	Name string
-	Uid int
+	Uid  int
 }
-func TestStructToString()[]byte{
-	player:=Player{"Player1",123}
-	result,_:=json.Marshal(&player)
+
+func TestStructToString() []byte {
+	player := Player{"Player1", 123}
+	result, _ := json.Marshal(&player)
 	return result
 }
-func testJsonToStruct(msg []byte){
-	player:=Player{}
-	json.Unmarshal(msg,&player)
+func testJsonToStruct(msg []byte) {
+	player := Player{}
+	json.Unmarshal(msg, &player)
 	fmt.Println(player)
 }
-func testMapToString()[]byte{
-	player:=make(map[string]interface{})
-	player["Name"]="Player1"
-	player["Uid"]=123
-	result,_:=json.Marshal(&player)
-	
+func testMapToString() []byte {
+	player := make(map[string]interface{})
+	player["Name"] = "Player1"
+	player["Uid"] = 123
+	result, _ := json.Marshal(&player)
+
 	return result
 }
-func testJsonToMap(msg []byte){
-	player:=make(map[string]interface{})
-	json.Unmarshal(msg,&player)
+func testJsonToMap(msg []byte) {
+	player := make(map[string]interface{})
+	json.Unmarshal(msg, &player)
 	fmt.Println(player)
 }
-func testArray(){
+func testArray() {
 	fmt.Println("Learning Array slice map!")
 	fmt.Println("第一种声明方式")
 	var array1 []string
@@ -107,31 +109,45 @@ func testArray(){
 	}
 
 	var array = [10]byte{'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'}
-	aSlice := array[3:7:8]  // aSlice包含元素: d,e,f,g，len=4，cap=7
-	bSlice := aSlice[0:5] // 对slice的slice可以在cap范围内扩展，此时bSlice包含：d,e,f,g,h
+	aSlice := array[3:7:8] // aSlice包含元素: d,e,f,g，len=4，cap=7
+	bSlice := aSlice[0:5]  // 对slice的slice可以在cap范围内扩展，此时bSlice包含：d,e,f,g,h
 	fmt.Println(array)
 	fmt.Println(aSlice)
 	fmt.Println(bSlice)
 }
-
+func getUnSignup(sign_count int) []int {
+	s := make([]int, 0, 31)
+	day := time.Now().Day()
+	for i := 1; i <= day; i++ {
+		if getBit(uint(i-1), &sign_count) == 0 {
+			s = append(s, i)
+		}
+	}
+	return s
+}
+func getBit(bit uint, src *int) int {
+	return ((*src) >> bit) & 1
+}
 func main() {
-//	msg1:=TestStructToString()
-//	fmt.Println(string(msg1))
-//	msg2:=testMapToString()
-//	fmt.Println(string(msg2))
-//	testJsonToStruct(msg1)
-//	testJsonToMap(msg2)
-//	f:=0.8
-//	fmt.Println(int(f))
-//	fmt.Println(7%5)
-	fmt.Println("\xe5\xba\x97\xe5\x91\x98\xe5\xbc\xa0\xe8\xbe\xbe")
-	a:=[]int{1,2,3}
-	b:=make([]int,3)
-	copy(b,a[0:2])
-	fmt.Println(b)
-	r:=[]rune("\xe5\xba\x97\xe5\x91\x98\xe5\xbc\xa0\xe8\xbe\xbe q")
-	fmt.Println(len(r))
-	fmt.Println(len("11111111111111111111111111111111111111111111111111111111111111111"))
-	fmt.Println(len("不知道你在说什么阿啊阿啊阿啊阿啊阿啊AA阿啊阿啊阿啊阿啊阿啊啊阿啊阿啊"))
-	fmt.Println(time.Now().Unix())
+	//	msg1:=TestStructToString()
+	//	fmt.Println(string(msg1))
+	//	msg2:=testMapToString()
+	//	fmt.Println(string(msg2))
+	//	testJsonToStruct(msg1)
+	//	testJsonToMap(msg2)
+	//	f:=0.8
+	//	fmt.Println(int(f))
+	//	fmt.Println(7%5)
+	// fmt.Println("\xe9\x9b\xaa\xe5\xb4\xa9\xe8\xa2\x81\xe9\x80\xa2")
+	// a := []int{1, 2, 3}
+	// b := make([]int, 3)
+	// copy(b, a[0:2])
+	// fmt.Println(b)
+	// r := []rune("\xe5\xba\x97\xe5\x91\x98\xe5\xbc\xa0\xe8\xbe\xbe q")
+	// fmt.Println(len(r))
+	// fmt.Println(len("11111111111111111111111111111111111111111111111111111111111111111"))
+	// fmt.Println(len("不知道你在说什么阿啊阿啊阿啊阿啊阿啊AA阿啊阿啊阿啊阿啊阿啊啊阿啊阿啊"))
+	// fmt.Println(time.Date(2015, 7, 31, 1, 0, 0, 0, time.Local).Unix())
+
+	fmt.Println(getUnSignup(2147483647))
 }

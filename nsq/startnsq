@@ -1,0 +1,11 @@
+killall nsqlookupd
+nohup nsqlookupd &
+sleep 5
+killall nsqd
+nohup nsqd --lookupd-tcp-address=127.0.0.1:4160 &
+sleep 5
+killall nsqadmin
+nohup nsqadmin --lookupd-http-address=127.0.0.1:4161 &
+sleep 5
+killall nsq_to_file
+nohup nsq_to_file --topic=test --output-dir=/tmp --lookupd-http-address=127.0.0.1:4161 &
