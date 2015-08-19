@@ -49,6 +49,7 @@ func main() {
 	fmt.Printf("|%6d|%6d|\n", 12, 34111)
 	fmt.Printf("|%6.2f|%6.2f|\n", 1.2, 1.45)
 	fmt.Printf("|%-6.2f|%-6.2f|\n", 1.2, 1.45)
+	fmt.Printf("%03d", 1)
 	fmt.Fprintf(os.Stdout, "an %s\n", "error")
 
 	type DataIn struct {
@@ -67,7 +68,7 @@ func main() {
 	fDate := "2006-01-02"
 	date, err := time.Parse(fDate, thisDate)
 	fmt.Println(date, err, date.Unix())
-	fmt.Println(time.Unix(1438819200, 0))
+	fmt.Println(time.Unix(1439856000, 0))
 	loc, _ := time.LoadLocation("Local")
 	date, err = time.ParseInLocation("2006-01-02", "2015-08-06", loc)
 	fmt.Println(date.Unix())

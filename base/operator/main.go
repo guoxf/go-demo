@@ -2,6 +2,11 @@ package main
 
 import (
 	"fmt"
+	"math/rand"
+)
+
+const (
+	Seed = "ABDCEFGHIJKLMNOPQRSTUVWXYZ0123456789"
 )
 
 func main() {
@@ -40,4 +45,15 @@ func main() {
 	//将int型变量a的第k位置设置为1， 即a=a|(1<<k)
 	//int型变量循环左移k次，即a=a<<k|a>>16-k (设sizeof(int)=16)
 	//int型变量a循环右移k次，即a=a>>k|a<<16-k (设sizeof(int)=16)
+	n := 10000000
+	var l int = 8
+	var result map[string]int = make(map[string]int)
+	tmp := make([]byte, l)
+	for i := 0; i < n; i++ {
+		for j := 0; j < l; j++ {
+			tmp[j] = Seed[rand.Intn(36)]
+		}
+		result[string(tmp)] = 0
+	}
+	fmt.Println(len(result))
 }
