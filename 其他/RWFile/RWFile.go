@@ -18,7 +18,7 @@ func main() {
 		fmt.Println(sourceFile, err1)
 		return
 	}
-	ipFile := "d:/Users/Administrator/Desktop/ip.txt"
+	ipFile := "ip.txt"
 	fout, err2 := os.Create(ipFile)
 	if err2 != nil {
 		fmt.Println(ipFile, err2)
@@ -31,8 +31,8 @@ func main() {
 			break
 		}
 		str := strings.Split(line, "@")
-		fmt.Println(str[0])
-		fmt.Println(str[1])
+		// fmt.Println(str[0])
+		// fmt.Println(str[1])
 		fout.WriteString(str[0] + "\r\n")
 
 	}

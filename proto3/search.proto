@@ -1,0 +1,45 @@
+syntax="proto3";
+
+package search;
+message Result{
+	string url=1;
+	string title=2;
+	repeated string snippets=3;
+}
+
+message SearchRequest{
+	string query=1; // dasdsa
+	int32 page_number=2;
+	int32 result_per_page=3;
+	repeated int32 test1=4 [packed=true];
+	bytes result=5;
+	enum Corpus{
+		UNIVERSAL=0;
+		WEB=1;
+		IMAGES=2;
+	}
+}
+//enum EnumAllowAlias{
+//	option allow_alias=true;
+//	UNKNOWN=0;
+//	STARTED=1;
+//	RUNNING=1;
+//}
+enum EnumNotAllowAlias{
+	UNKNOWN=0;
+	STARTED=1;
+	//RUNNING=1;
+}
+
+
+message SearchResponse{
+	repeated Result result=1;
+	oneof test_oneof {
+	  string name = 4;
+	}
+	map<string,int32> msg=2;
+}
+
+service SearchService{
+	rpc Search(SearchRequest) returns (SearchResponse);
+}

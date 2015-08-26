@@ -2,11 +2,12 @@ package main
 
 import (
 	"encoding/json"
-	"net/http"
-	"io/ioutil"
 	"fmt"
+	"io/ioutil"
+	"net/http"
 	"strings"
 )
+
 /*
  'amount' => '0.01',
   'extra' => 'com.jmsg.3000gold',
@@ -17,60 +18,60 @@ import (
   'sign' => '5774c06097d22e7519a449c8d97289a4',
   'sig' => '57a588c6a0002ee94a69a07ac308a8d7',
 */
-func main(){
+func main() {
 	testXDCharge()
 }
 
-func testXDCharge(){
-	v:=make(map[string]string)
-	v["Gold"]="388"
-	v["Ext"]="com.jmsg.4500stone"
-	v["Order_id"]="100005158_4856156_1436371251_4021"
-	v["App_id"]="2"
-	v["Timestamp"]="1436371260"
-	v["User_id"]="32743973"
-	v["sign"]="5774c06097d22e7519a449c8d97289a4"
-	v["sig"]="57a588c6a0002ee94a69a07ac308a8d7"
-	b,_:=json.Marshal(v)
+func testXDCharge() {
+	v := make(map[string]string)
+	v["Gold"] = "388"
+	v["Ext"] = "com.jmsg.4500stone"
+	v["Order_id"] = "100005158_4856156_1436371251_4021"
+	v["App_id"] = "2"
+	v["Timestamp"] = "1436371260"
+	v["User_id"] = "32743973"
+	v["sign"] = "5774c06097d22e7519a449c8d97289a4"
+	v["sig"] = "57a588c6a0002ee94a69a07ac308a8d7"
+	b, _ := json.Marshal(v)
 	body := ioutil.NopCloser(strings.NewReader(string(b))) //把form数据编下码
 	client := &http.Client{}
-	req,_:=http.NewRequest("POST","http://42.62.67.240:8892/test/chargeNotify",body)
+	req, _ := http.NewRequest("POST", "http://0.0.0.0:8892/test/chargeNotify", body)
 	req.Header.Set("Content-Type", "application/x-www-form-urlencoded; param=value") //这个一定要加，不加form的值post不过去，被坑了两小时
 	fmt.Printf("%+v\n", req)                                                         //看下发送的结构
-	
+
 	resp, err := client.Do(req) //发送
 	fmt.Println(err)
-	defer resp.Body.Close()     //一定要关闭resp.Body
+	defer resp.Body.Close() //一定要关闭resp.Body
 	data, _ := ioutil.ReadAll(resp.Body)
 	fmt.Println(string(data), err)
 }
 
-func testXYCharge(){
-	v:=make(map[string]string)
-	v["amount"]="0.01"
-	v["extra"]="com.jmsg.3000gold"
-	v["orderid"]="100005158_4856156_1436371251_4021"
-	v["serverid"]="1"
-	v["ts"]="1436371260"
-	v["uid"]="4856156"
-	v["sign"]="5774c06097d22e7519a449c8d97289a4"
-	v["sig"]="57a588c6a0002ee94a69a07ac308a8d7"
-	b,_:=json.Marshal(v)
+func testXYCharge() {
+	v := make(map[string]string)
+	v["amount"] = "0.01"
+	v["extra"] = "com.jmsg.3000gold"
+	v["orderid"] = "100005158_4856156_1436371251_4021"
+	v["serverid"] = "1"
+	v["ts"] = "1436371260"
+	v["uid"] = "4856156"
+	v["sign"] = "5774c06097d22e7519a449c8d97289a4"
+	v["sig"] = "57a588c6a0002ee94a69a07ac308a8d7"
+	b, _ := json.Marshal(v)
 	body := ioutil.NopCloser(strings.NewReader(string(b))) //把form数据编下码
 	client := &http.Client{}
-	req,_:=http.NewRequest("POST","http://0.0.0.0:8892/xy/chargeNotify",body)
+	req, _ := http.NewRequest("POST", "http://0.0.0.0:8892/xy/chargeNotify", body)
 	req.Header.Set("Content-Type", "application/x-www-form-urlencoded; param=value") //这个一定要加，不加form的值post不过去，被坑了两小时
 	fmt.Printf("%+v\n", req)                                                         //看下发送的结构
-	
+
 	resp, err := client.Do(req) //发送
 	fmt.Println(err)
-	defer resp.Body.Close()     //一定要关闭resp.Body
+	defer resp.Body.Close() //一定要关闭resp.Body
 	data, _ := ioutil.ReadAll(resp.Body)
 	fmt.Println(string(data), err)
 }
 
-func testCrash(){
-	b:=`recv: 140, {"Armid":81,"ArmStarAdvance":1,"SoulStone":0,"ArmSoulStoneOID":81,"ArmSoulStoneCount":9}
+func testCrash() {
+	b := `recv: 140, {"Armid":81,"ArmStarAdvance":1,"SoulStone":0,"ArmSoulStoneOID":81,"ArmSoulStoneCount":9}
 send: 140, {"Armid":81}
 recv: 140, {"Armid":81,"ArmStarAdvance":2,"SoulStone":0,"ArmSoulStoneOID":81,"ArmSoulStoneCount":0}
 send: 140, {"Armid":322}
@@ -98,12 +99,12 @@ send: 140, {"Armid":96}
 `
 	body := ioutil.NopCloser(strings.NewReader(string(b))) //把form数据编下码
 	client := &http.Client{}
-	req,_:=http.NewRequest("POST","http://42.62.67.240:8888/api/test/SaveCrash",body)
+	req, _ := http.NewRequest("POST", "http://42.62.67.240:8888/api/test/SaveCrash", body)
 	//req.Header.Set("Content-Type", "application/x-www-form-urlencoded; param=value") //这个一定要加，不加form的值post不过去，被坑了两小时
-	fmt.Printf("%+v\n", req)//看下发送的结构
+	fmt.Printf("%+v\n", req)    //看下发送的结构
 	resp, err := client.Do(req) //发送
 	fmt.Println(err)
-	defer resp.Body.Close()     //一定要关闭resp.Body
+	defer resp.Body.Close() //一定要关闭resp.Body
 	data, _ := ioutil.ReadAll(resp.Body)
 	fmt.Println(string(data), err)
 }
