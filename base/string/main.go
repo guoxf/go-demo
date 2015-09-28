@@ -27,7 +27,7 @@ func test2() (back error) {
 	return nil
 }
 func main() {
-
+	fmt.Println(fmt.Sprint(1.2))
 	p := point{1, 2}
 	fmt.Printf("%v\n", p)
 	fmt.Printf("%+v\n", p)
@@ -38,7 +38,7 @@ func main() {
 	fmt.Printf("%b\n", 123) //二进制
 	fmt.Printf("%c\n", 33)  //码
 	fmt.Printf("%x\n", 16)  //HEX编码
-	fmt.Printf("%f\n", 23.112)
+	fmt.Printf("%-1f\n", 23.112)
 	fmt.Printf("%E\n", 1200000.0)
 	fmt.Printf("%e\n", 1200000.0)
 	fmt.Printf("%s\n", "\"string\"")
@@ -51,7 +51,7 @@ func main() {
 	fmt.Printf("|%-6.2f|%-6.2f|\n", 1.2, 1.45)
 	fmt.Printf("%03d", 1)
 	fmt.Fprintf(os.Stdout, "an %s\n", "error")
-
+	fmt.Printf("%f", 142312312344342342.0)
 	type DataIn struct {
 		Lists []struct {
 			HeroOid int `json:"Heroid"`
@@ -64,6 +64,22 @@ func main() {
 	for i, v := range msg.Lists {
 		fmt.Println(i, v)
 	}
+loop1:
+	{
+		fmt.Println("loop1")
+		return
+	}
+
+loop2:
+	{
+		fmt.Println("loop2")
+		return
+	}
+	if true {
+		goto loop1
+	} else {
+		goto loop2
+	}
 	thisDate := "2015-07-17"
 	fDate := "2006-01-02"
 	date, err := time.Parse(fDate, thisDate)
@@ -73,4 +89,5 @@ func main() {
 	date, err = time.ParseInLocation("2006-01-02", "2015-08-06", loc)
 	fmt.Println(date.Unix())
 	fmt.Println(time.Date(date.Year(), date.Month(), date.Day(), date.Hour(), 0, 0, 0, time.Local))
+
 }

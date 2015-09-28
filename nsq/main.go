@@ -15,7 +15,12 @@ import (
 )
 
 func main() {
-	consumerTest()
+	topicName := "rdr_test"
+	topicName = topicName + strconv.Itoa(int(time.Now().Unix()))
+	SendMessage(4151, topicName, "put", []byte(`{"msg":"single"}`))
+	SendMessage(4151, topicName, "mput", []byte("{\"msg\":\"double\"}\n{\"msg\":\"double\"}"))
+	SendMessage(4151, topicName, "put", []byte("TOBEFAILED"))
+	//consumerTest()
 }
 
 type MyTestHandler struct {
@@ -58,19 +63,20 @@ func (h *MyTestHandler) HandleMessage(message *nsq.Message) error {
 
 func SendMessage(port int, topic string, method string, body []byte) {
 	httpclient := &http.Client{}
-	endpoint := fmt.Sprintf("http://127.0.0.1:%d/%s?topic=%s", port, method, topic)
+	endpoint := fmt.Sprintf("http://192.168.59.103:%d/%s?topic=%s", port, method, topic)
 	req, err := http.NewRequest("POST", endpoint, bytes.NewBuffer(body))
 	resp, err := httpclient.Do(req)
 	if err != nil {
 		fmt.Println(err.Error())
 		return
 	}
+	fmt.Println(resp.Body)
 	resp.Body.Close()
 }
 
 func consumerTest() {
 	config := nsq.NewConfig()
-	laddr := "127.0.0.1"
+	laddr := "172.24.16.109"
 	// so that the test can simulate binding consumer to specified address
 	config.LocalAddr, _ = net.ResolveTCPAddr("tcp", laddr+":0")
 	// so that the test can simulate reaching max requeues and a call to LogFailedMessage
@@ -91,7 +97,7 @@ func consumerTest() {
 	SendMessage(4151, topicName, "put", []byte("TOBEFAILED"))
 	h.messagesSent = 4
 
-	addr := "127.0.0.1:4150"
+	addr := "192.168.59.103:4150"
 	err := q.ConnectToNSQD(addr)
 	if err != nil {
 		fmt.Println(err)

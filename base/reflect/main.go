@@ -9,11 +9,15 @@ import (
 )
 
 func main() {
+
 	name := "Elvin"
 	fmt.Println("name type is ", reflect.TypeOf(name).Name())
 	fmt.Println("name value is ", reflect.ValueOf(name).String())
 
 	user := new(models.User)
+	var obj interface{}
+	obj = user
+	fmt.Println(reflect.ValueOf(obj).Elem().NumField())
 	user.Name = "Elvin"
 	user.Age = 22
 	user.Sex = true
@@ -32,6 +36,8 @@ func main() {
 	fmt.Println("User have ", numField, " field")
 	fmt.Println()
 	ty := reflect.TypeOf(user)
+	newUser := reflect.New(reflect.Indirect(u).Type())
+	fmt.Println("newUser", newUser.Interface().(*models.User))
 	str := "User.%s type is %s,value is %v \r\n"
 	for i := 0; i < numField; i++ {
 		name := u.Field(i).Type().Name()
@@ -49,6 +55,7 @@ func main() {
 		default:
 			fmt.Printf(str, ty.Elem().Field(i).Name, name, u.Field(i).String())
 		}
+		fmt.Print(ty.Elem().Field(i).Name)
 	}
 	fmt.Println()
 

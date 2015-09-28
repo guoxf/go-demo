@@ -4,6 +4,7 @@ import (
 	"container/list"
 	"encoding/json"
 	"fmt"
+	"net/url"
 	"time"
 )
 
@@ -149,5 +150,19 @@ func main() {
 	// fmt.Println(len("不知道你在说什么阿啊阿啊阿啊阿啊阿啊AA阿啊阿啊阿啊阿啊阿啊啊阿啊阿啊"))
 	// fmt.Println(time.Date(2015, 7, 31, 1, 0, 0, 0, time.Local).Unix())
 
-	fmt.Println(getUnSignup(2147483647))
+	//fmt.Println(getUnSignup(2147483647))
+	u, err := url.Parse("http://bing.com/search?q=dotnet")
+	if err != nil {
+		fmt.Println(err)
+	}
+	u.Scheme = "https"
+	u.Host = "google.com"
+	v := u.Query()
+	v.Set("name", "Ava")
+	v.Add("friend", "Jess")
+	v.Add("friend", "Sarah")
+	v.Add("friend", "Zoe")
+	u.RawQuery = v.Encode()
+	fmt.Println(u.String())
+	fmt.Println(u.RawQuery)
 }

@@ -1,11 +1,15 @@
 package main
 
 import (
+	"crypto/md5"
+	"encoding/hex"
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
 	"net/http"
+	"net/url"
 	"strings"
+	"time"
 )
 
 /*
@@ -19,9 +23,91 @@ import (
   'sig' => '57a588c6a0002ee94a69a07ac308a8d7',
 */
 func main() {
-	testXDCharge()
+	//data := make(map[string]interface{})
+	//data["e"] = 1
+	//fmt.Println(len(data))
+	testLogin()
 }
 
+type LoginRequestData struct {
+	Channel   string
+	M         string
+	PUid      int
+	ServerId  int
+	IsAdult   int
+	TimeStamp int64
+	Sign      string
+}
+
+const (
+	LOGIN_KEY = "sign,sign_return,signature,m,c" //登陆秘钥
+)
+
+func objectToString(v interface{}) string {
+	switch v.(type) {
+	case string:
+		return v.(string)
+	case int, int32, int64:
+		return fmt.Sprintf("%d", v)
+	case float32, float64:
+		//return strconv.AppendFloat(v.(float64), 'g', -1, 64)
+		return fmt.Sprintf("%f", v.(float64))
+	case bool:
+		return fmt.Sprintf("%t", v)
+	default:
+		return fmt.Sprintf("%v", v)
+	}
+}
+
+//生成签名
+func getSign(data *LoginRequestData) string {
+	plainText := fmt.Sprintf("%s%d%d%d%d", LOGIN_KEY, data.IsAdult, data.PUid, data.ServerId, data.TimeStamp)
+	fmt.Println(plainText)
+	tmp := md5.Sum([]byte(plainText))
+	plainText = hex.EncodeToString(tmp[:])
+	return strings.ToUpper(plainText)
+}
+func generateUrl(params map[string]interface{}) string {
+	p := url.Values{}
+	for key, v := range params {
+		p.Set(key, objectToString(v))
+	}
+
+	return fmt.Sprintf("%s", p.Encode())
+}
+func testLogin() {
+	var msg LoginRequestData
+	msg.Channel = "channel"
+	msg.IsAdult = 0
+	msg.M = "login"
+	msg.PUid = 12
+	msg.ServerId = 1
+	msg.TimeStamp = time.Now().UnixNano()
+	msg.Sign = getSign(&msg)
+
+	v := make(map[string]interface{})
+	v["Channel"] = msg.Channel
+	v["M"] = msg.M
+	v["IsAdult"] = msg.IsAdult
+	v["PUid"] = msg.PUid
+	v["ServerId"] = msg.ServerId
+	v["TimeStamp"] = msg.TimeStamp
+	v["Sign"] = msg.Sign
+
+	body := ioutil.NopCloser(strings.NewReader(generateUrl(v))) //把form数据编下码
+
+	//msg := `{"Channel":"channel","M":"login","PUid":12,"ServerId":1,"IsAdult":0,"TimeStamp":1442987290292733700,"Sign":"EE88F81BE87376CF67121C0CC497F7E8"}`
+	//body := ioutil.NopCloser(strings.NewReader(msg)) //把form数据编下码
+	client := &http.Client{}
+	req, _ := http.NewRequest("POST", "http://127.0.0.1:8080/v1/login/?"+generateUrl(v), body)
+	req.Header.Set("Content-Type", "application/x-www-form-urlencoded; param=value") //这个一定要加，不加form的值post不过去，被坑了两小时
+	fmt.Printf("%+v\n", req)                                                         //看下发送的结构
+	resp, err := client.Do(req)                                                      //发送
+	fmt.Println(err)
+	defer resp.Body.Close() //一定要关闭resp.Body
+	data, _ := ioutil.ReadAll(resp.Body)
+	fmt.Println(string(data), err)
+}
 func testXDCharge() {
 	v := make(map[string]string)
 	v["Gold"] = "388"

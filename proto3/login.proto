@@ -1,0 +1,21 @@
+syntax="proto3"
+
+package proto
+
+message Login{
+	message Request{
+		string C=1;
+		string M=2;
+		int32  PUid=3;
+		int32  ServerId=4;
+		int32  IsAdult=5;
+		int32  TimeStamp=6;
+		string Sign=7;
+	}
+
+	message Response{
+		int32 Code=1;
+		string Msg=2;
+	}
+}
+
