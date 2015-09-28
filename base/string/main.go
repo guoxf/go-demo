@@ -2,6 +2,7 @@ package main
 
 import (
 	"errors"
+	"strings"
 	"time"
 )
 import (
@@ -27,7 +28,12 @@ func test2() (back error) {
 	return nil
 }
 func main() {
+<<<<<<< HEAD
 	fmt.Println(fmt.Sprint(1.2))
+=======
+	fmt.Printf("%%%s\n", "d")
+	fmt.Println(strings.TrimSpace(" dada dasda "))
+>>>>>>> 4d58a36d4bc9d32e93c7b57528505193b8df56f2
 	p := point{1, 2}
 	fmt.Printf("%v\n", p)
 	fmt.Printf("%+v\n", p)
