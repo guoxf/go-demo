@@ -11,9 +11,9 @@ import (
 
 func Echo(ws *websocket.Conn) {
 	fmt.Println("start websocket!")
-	session := newSession(ws)
+	session := NewSession(ws)
 	defer func() {
-		delSession(session)
+		DelSession(session)
 		fmt.Println("close websocket!")
 	}()
 	go session.Send()
@@ -28,7 +28,7 @@ func index(w http.ResponseWriter, res *http.Request) {
 func main() {
 	http.HandleFunc("/", index)
 	http.Handle("/echo", websocket.Handler(Echo))
-	go notifyClient()
+	go NotifyClient()
 	if err := http.ListenAndServe(":1234", nil); err != nil {
 		log.Fatal("ListenAndServe:", err)
 	}
