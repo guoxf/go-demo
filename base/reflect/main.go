@@ -90,5 +90,4 @@ func main() {
 	fmt.Println("User.Display type is ", reflect.ValueOf(user).MethodByName("Display"))
 	fmt.Println("Call func result ", reflect.ValueOf(user).MethodByName("Display").Call([]reflect.Value{}))
 	fmt.Println()
-
 }

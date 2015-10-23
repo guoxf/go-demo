@@ -11,9 +11,10 @@
 					console.log("connected to "+wsuri)
 				}
 				sock.onclose=function(e){
-					console.log("connected closed "+e.code)
+					console.log("connected closed "+e.code) 
 				}
 				sock.onmessage=function(e){
+					document.getElementById("receive").value=e.data;
 					console.log("message received:"+e.data)
 				}
 			};
@@ -26,6 +27,7 @@
 		<form>
 			<p>
 				Message:<input id="message" type="text" value="Hellp ,world!">
+				Receive:<input id="receive" type="text" value="">
 			</p>
 		</form>
 		<button onclick="send();">Send Message</button>
