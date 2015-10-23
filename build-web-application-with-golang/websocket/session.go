@@ -10,32 +10,34 @@ import (
 )
 
 var (
-	conns []*Session
+	conns map[int]*Session
 	mutex *sync.Mutex
+	id    int = 0
 )
 
 func init() {
-	conns = make([]*Session, 0)
+	conns = make(map[int]*Session)
 	mutex = new(sync.Mutex)
 }
 
 func NewSession(ws *websocket.Conn) *Session {
+	id++
 	session := &Session{
 		Conn:      ws,
 		SendQueue: make(chan ResponseData, 10),
 		Quit:      false,
+		Index:     id,
 	}
 	mutex.Lock()
 	defer mutex.Unlock()
-	conns = append(conns, session)
-	session.Index = len(conns)
+	conns[id] = session
 	return session
 }
 
 func DelSession(session *Session) {
 	mutex.Lock()
 	mutex.Unlock()
-	conns = append(conns[:session.Index-1], conns[session.Index:]...)
+	delete(conns, session.Index)
 }
 
 type ResponseData struct {
