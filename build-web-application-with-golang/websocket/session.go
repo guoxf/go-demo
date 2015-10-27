@@ -6,7 +6,7 @@ import (
 	"sync"
 	"time"
 
-	"golang.org/x/net/websocket"
+	"github.com/gorilla/websocket"
 )
 
 var (
@@ -60,16 +60,17 @@ func (session *Session) Close() {
 
 func (session *Session) handler() {
 	var err error
+	var messageType int
 	for !session.Quit {
-		var reply string
-		if err = websocket.Message.Receive(session.Conn, &reply); err != nil {
+		var reply []byte
+		if messageType, reply, err = session.Conn.ReadMessage(); err != nil {
 			fmt.Println("Can't receive")
 			session.Close()
 			break
 		}
-		fmt.Println("Receive Message", reply)
+		fmt.Println("Receive Message", string(reply), messageType)
 		var msg ResponseData
-		if err = json.Unmarshal([]byte(reply), &msg); err != nil {
+		if err = json.Unmarshal(reply, &msg); err != nil {
 			fmt.Println(err.Error())
 			session.Close()
 			break
@@ -84,13 +85,14 @@ func (session *Session) Send() {
 		select {
 		case msg := <-session.SendQueue:
 			fmt.Println("Sending to client: ", msg)
-			var result []byte
-			if result, err = json.Marshal(&msg); err != nil {
-				fmt.Println("json.Marshal error", err.Error())
-				session.Close()
-				break
-			}
-			if err = websocket.Message.Send(session.Conn, string(result)); err != nil {
+			// var result []byte
+			// if result, err = json.Marshal(&msg); err != nil {
+			// 	fmt.Println("json.Marshal error", err.Error())
+			// 	session.Close()
+			// 	break
+			// }
+
+			if err = session.Conn.WriteJSON(msg); err != nil {
 				fmt.Println("Can't send")
 				session.Close()
 				break

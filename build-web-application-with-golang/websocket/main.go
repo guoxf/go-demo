@@ -6,10 +6,16 @@ import (
 	"log"
 	"net/http"
 
-	"golang.org/x/net/websocket"
+	"github.com/gorilla/websocket"
 )
 
-func Echo(ws *websocket.Conn) {
+var upgrader = websocket.Upgrader{} // use default options
+func Echo(w http.ResponseWriter, r *http.Request) {
+	ws, err := upgrader.Upgrade(w, r, nil)
+	if err != nil {
+		log.Print("upgrade:", err)
+		return
+	}
 	fmt.Println("start websocket!")
 	session := NewSession(ws)
 	defer func() {
@@ -27,7 +33,7 @@ func index(w http.ResponseWriter, res *http.Request) {
 
 func main() {
 	http.HandleFunc("/", index)
-	http.Handle("/echo", websocket.Handler(Echo))
+	http.HandleFunc("/echo", Echo)
 	go NotifyClient()
 	if err := http.ListenAndServe(":1234", nil); err != nil {
 		log.Fatal("ListenAndServe:", err)

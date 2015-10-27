@@ -4,14 +4,15 @@ import (
 	"encoding/json"
 	"fmt"
 	"log"
-	"net"
 	"net/http"
 	"net/http/httptest"
+	"net/url"
 	"runtime"
 	"sync"
 	"testing"
 
-	"golang.org/x/net/websocket"
+	"github.com/gorilla/websocket"
+	. "github.com/smartystreets/goconvey/convey"
 )
 
 var (
@@ -21,7 +22,7 @@ var (
 )
 
 func startServer() {
-	http.Handle("/echo", websocket.Handler(Echo))
+	http.HandleFunc("/echo", Echo)
 	go NotifyClient()
 	server := httptest.NewServer(nil)
 	serverAddr = server.Listener.Addr().String()
@@ -29,46 +30,47 @@ func startServer() {
 }
 
 func newClient(t *testing.T) {
-	wg.Add(1)
 	defer wg.Done()
-	client, err := net.Dial("tcp", serverAddr)
-	if err != nil {
-		t.Error(err.Error())
-		return
-	}
+	u := url.URL{Scheme: "ws", Host: serverAddr, Path: "/echo"}
+	log.Printf("connecting to %s", u.String())
 
-	conn, err := websocket.NewClient(newConfig(t, "/echo"), client)
-	if err != nil {
-		t.Error(err.Error())
-		return
-	}
+	conn, _, err := websocket.DefaultDialer.Dial(u.String(), nil)
+	Convey("new ws connection success", t, func() {
+		So(err, ShouldBeNil)
+	})
 	defer conn.Close()
 
 	close := make(chan bool)
 	var send = func() {
 		for i := 0; i < 100; i++ {
 			msg := ResponseData{
-				Opt: i,
-				Msg: fmt.Sprintf("发送第%d次数据", i),
+				Opt:     i,
+				Success: true,
+				Msg:     fmt.Sprintf("发送第%d次数据", i),
 			}
-			if b, err := json.Marshal(&msg); err != nil {
-				fmt.Println(err.Error())
-				break
-			} else if _, err = conn.Write(b); err != nil {
-				fmt.Println(err.Error())
-				break
-			}
+
+			Convey("Send Message Success", t, func() {
+				err := conn.WriteJSON(msg)
+				So(err, ShouldBeNil)
+			})
 			runtime.Gosched()
 		}
 	}
 	var receive = func(ch chan bool) {
 		i := 0
-		actual_msg := make([]byte, 502)
-		for i < 100 {
-			_, err := conn.Read(actual_msg)
-			if err != nil {
-				t.Errorf("Reader: %v", err)
-			}
+		for i < 2 {
+			_, message, err := conn.ReadMessage()
+			Convey("Read Message Success", t, func() {
+				So(err, ShouldBeNil)
+			})
+
+			Convey("Check Result", t, func() {
+				var v ResponseData
+				err = json.Unmarshal(message, &v)
+				So(err, ShouldBeNil)
+				So(v.Success, ShouldBeTrue)
+				log.Printf("recv: %s", message)
+			})
 			i++
 			runtime.Gosched()
 		}
@@ -79,14 +81,10 @@ func newClient(t *testing.T) {
 	<-close
 }
 
-func newConfig(t *testing.T, path string) *websocket.Config {
-	config, _ := websocket.NewConfig(fmt.Sprintf("ws://%s%s", serverAddr, path), "http://localhost")
-	return config
-}
-
 func TestConcurrency(t *testing.T) {
 	once.Do(startServer)
-	for i := 0; i < 20; i++ {
+	for i := 0; i < 2; i++ {
+		wg.Add(1)
 		go newClient(t)
 	}
 	wg.Wait()
