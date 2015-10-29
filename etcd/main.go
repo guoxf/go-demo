@@ -3,19 +3,19 @@ package main
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/coreos/go-etcd/etcd"
 	"log"
 	"math/rand"
-	"os"
-	"os/signal"
 	"regexp"
 	"runtime"
 	"time"
+
+	"github.com/coreos/go-etcd/etcd"
 )
 
+//http://172.24.12.1:81/static/client/
 var (
 	client        *etcd.Client
-	machines      = []string{"http://0.0.0.0:2379"}
+	machines      = []string{"http://172.24.3.80:2379"}
 	appStatusReg  = regexp.MustCompile(`/serverstatus/(agent|auth|rank|chat)/[0-9]+`)
 	gameStatusReg = regexp.MustCompile(`/serverstatus/game/[0-9]+/[0-9]+`)
 	num           = regexp.MustCompile(`[0-9]+`)
@@ -107,7 +107,7 @@ func startWatch() {
 
 var (
 	etcdBench = "/etcd-bench/%d"
-	r         = rand.New(time.Now().Unix())
+	r         = rand.New(rand.NewSource(time.Now().Unix()))
 )
 
 type RankInfo struct {
@@ -139,19 +139,29 @@ func update() {
 	runtime.Gosched()
 }
 
+func recurisve2(node *etcd.Node) {
+	if node.Dir {
+		for _, v := range node.Nodes {
+			recurisve2(v)
+		}
+	} else {
+		log.Println(node.Key)
+	}
+}
+
 func main() {
 	client = etcd.NewClient(machines)
 	defer client.Close()
-	c := make(chan os.Signal)
-	signal.Notify(c)
-	<-c
+	// c := make(chan os.Signal)
+	// signal.Notify(c)
+	// <-c
 
 	// if _, err := client.Set("/foo", "bar", 0); err != nil {
 	// 	log.Fatal(err)
 	// }
-	// if res, err := client.Get("/foo", false, false); err != nil {
-	// 	log.Fatal(err)
-	// } else {
-	// 	log.Println(res)
-	// }
+	if res, err := client.Get("/root", true, true); err != nil {
+		log.Fatal(err)
+	} else {
+		recurisve2(res.Node)
+	}
 }
