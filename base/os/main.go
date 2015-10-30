@@ -16,4 +16,5 @@ func main() {
 	// fin.Close()
 
 	fmt.Println(path.Join("../os/admin", "../public/views"))
+	fmt.Println(path.Join("../os/", ""))
 }

@@ -23,17 +23,18 @@ func init() {
 }
 
 func main() {
-	testKeepAlive()
+	testDial()
 }
 func testDial() {
 	config := &ssh.ClientConfig{
-		User: "root",
+		// User: "root",
 		Auth: []ssh.AuthMethod{
 			ssh.PublicKeys(signer),
 		},
 	}
 	c, err := ssh.Dial("tcp", "192.168.56.101:22", config)
 	if err != nil {
+		log.Fatalln(err.Error())
 		return
 	}
 	defer c.Close()
@@ -46,6 +47,7 @@ func testDial() {
 
 	b, err := session.Output("ls /data/goserver")
 	if err != nil {
+		log.Fatalln(err.Error())
 		return
 	}
 	fienNames := strings.Split(string(b), "\n")
