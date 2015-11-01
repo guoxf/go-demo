@@ -1,33 +1,43 @@
 <html>
-	<head></head>
-	<body>
-		<script type="text/javascript">
-			var sock=null;
-			var wsuri="ws://127.0.0.1:1234/echo";
-			window.onload=function(){
-				console.log("onload");
-				sock=new WebSocket(wsuri)
-				sock.onopen=function(){
-					console.log("connected to "+wsuri)
-				}
-				sock.onclose=function(e){
-					console.log("connected closed "+e.code)
-				}
-				sock.onmessage=function(e){
-					console.log("message received:"+e.data)
-				}
-			};
-			function send(){
-				var msg=document.getElementById("message").value;
-				sock.send(msg);
+
+<head></head>
+
+<body>
+	<script type="text/javascript">
+		var sock = null;
+		var wsuri = "ws://"+location.host+"/echo";
+		window.onload = function() {
+			console.log("onload");
+			sock = new WebSocket(wsuri)
+			sock.onopen = function() {
+				document.getElementById("receive").value =("connected to " + wsuri)
 			}
-		</script>
-		<h1>WebSocket Echo Test</h1>
-		<form>
-			<p>
-				Message:<input id="message" type="text" value="Hellp ,world!">
-			</p>
-		</form>
-		<button onclick="send();">Send Message</button>
-	</body>
+			sock.onclose = function(e) {
+				document.getElementById("receive").value =("connected closed " + e.code);
+			}
+			sock.onmessage = function(e) {
+				var data=JSON.parse(e.data)
+				document.getElementById("receive").value = data.msg;
+			}
+		};
+
+		function send() {
+			var msg = {
+				msg: document.getElementById("message").value,
+				opt: 1
+			};
+			sock.send(JSON.stringify(msg));
+		}
+	</script>
+	<h1>WebSocket Echo Test</h1>
+	<form>
+		<p>
+			Message:
+			<input id="message" type="text" value="Hellp ,world!"> Receive:
+			<input id="receive" type="text" value="">
+		</p>
+	</form>
+	<button onclick="send();">Send Message</button>
+</body>
+
 </html>

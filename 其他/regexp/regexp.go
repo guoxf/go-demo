@@ -67,4 +67,13 @@ func pathFormate(fileName, formate string) string {
 	formate = strings.Replace(formate, "{ii}", fmt.Sprintf("%02d", now.Minute()), 1)
 	formate = strings.Replace(formate, "{ss}", fmt.Sprintf("%02d", now.Second()), 1)
 	return formate + extension
+	// appReg := regexp.MustCompile(`/serverstatus/(agent|auth|rank|chat)/[0-9]*`)
+	// gameReg := regexp.MustCompile(`/serverstatus/game/[0-9]*/[0-9]*`)
+	// num := regexp.MustCompile(`[0-9]{1,18}`)
+	// fmt.Printf("%q\n", appReg.FindString("/goserver/serverstatus/agent/10000"))
+	// fmt.Printf("%q\n", appReg.FindString("/goserver/serverstatus/auth/10001"))
+	// fmt.Printf("%v\n", gameReg.MatchString("/goserver/serverstatus/game/100001/100002"))
+	//
+	// fmt.Printf("%q\n", num.FindAllString("/goserver/serverstatus/game/agent/10000", -1))
+	// fmt.Printf("%q\n", num.FindAllString("/goserver/serverstatus/game/100001/100002", -1))
 }

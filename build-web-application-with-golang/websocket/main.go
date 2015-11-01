@@ -1,43 +1,41 @@
 package main
 
-import(
-	"code.google.com/p/go.net/websocket"
+import (
 	"fmt"
+	"html/template"
 	"log"
 	"net/http"
-	"html/template"
+
+	"github.com/gorilla/websocket"
 )
 
-func Echo(ws *websocket.Conn){
-	var err error
-	
-	for{
-		var reply string
-		
-		if err=websocket.Message.Receive(ws,&reply);err!=nil{
-			fmt.Println("Can't receive")
-			break
-		}
-		
-		fmt.Println("Received back from client: ",reply)
-		
-		msg:="Received: "+reply
-		fmt.Println("Sending to client: ",msg)
-		if err=websocket.Message.Send(ws,msg);err!=nil{
-			fmt.Println("Can't send")
-			break
-		}
+var upgrader = websocket.Upgrader{} // use default options
+func Echo(w http.ResponseWriter, r *http.Request) {
+	ws, err := upgrader.Upgrade(w, r, nil)
+	if err != nil {
+		log.Print("upgrade:", err)
+		return
 	}
+	fmt.Println("start websocket!")
+	session := NewSession(ws)
+	defer func() {
+		DelSession(session)
+		fmt.Println("close websocket!")
+	}()
+	go session.Send()
+	session.handler()
 }
-func index(w http.ResponseWriter,res *http.Request){
+
+func index(w http.ResponseWriter, res *http.Request) {
 	t, _ := template.ParseFiles("index.html")
 	t.Execute(w, nil)
 }
-func main(){
-	http.HandleFunc("/",index)
-	http.Handle("/echo",websocket.Handler(Echo))
-	
-	if err:=http.ListenAndServe(":1234",nil);err!=nil{
-		log.Fatal("ListenAndServe:",err)
+
+func main() {
+	http.HandleFunc("/", index)
+	http.HandleFunc("/echo", Echo)
+	go NotifyClient()
+	if err := http.ListenAndServe(":1234", nil); err != nil {
+		log.Fatal("ListenAndServe:", err)
 	}
 }

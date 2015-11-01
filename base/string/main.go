@@ -28,12 +28,10 @@ func test2() (back error) {
 	return nil
 }
 func main() {
-<<<<<<< HEAD
+	fmt.Printf("%03d", 1)
 	fmt.Println(fmt.Sprint(1.2))
-=======
 	fmt.Printf("%%%s\n", "d")
 	fmt.Println(strings.TrimSpace(" dada dasda "))
->>>>>>> 4d58a36d4bc9d32e93c7b57528505193b8df56f2
 	p := point{1, 2}
 	fmt.Printf("%v\n", p)
 	fmt.Printf("%+v\n", p)
@@ -70,24 +68,24 @@ func main() {
 	for i, v := range msg.Lists {
 		fmt.Println(i, v)
 	}
-loop1:
-	{
-		fmt.Println("loop1")
-		return
-	}
+	// loop1:
+	// 	{
+	// 		fmt.Println("loop1")
+	// 		return
+	// 	}
 
-loop2:
-	{
-		fmt.Println("loop2")
-		return
-	}
-	if true {
-		goto loop1
-	} else {
-		goto loop2
-	}
+	// loop2:
+	// 	{
+	// 		fmt.Println("loop2")
+	// 		return
+	// 	}
+	// 	if true {
+	// 		goto loop1
+	// 	} else {
+	// 		goto loop2
+	// 	}
 	thisDate := "2015-07-17"
-	fDate := "2006-01-02"
+	fDate := "2006-01-02 15:04:05"
 	date, err := time.Parse(fDate, thisDate)
 	fmt.Println(date, err, date.Unix())
 	fmt.Println(time.Unix(1439856000, 0))

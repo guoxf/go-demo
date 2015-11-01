@@ -185,7 +185,7 @@ send: 140, {"Armid":96}
 `
 	body := ioutil.NopCloser(strings.NewReader(string(b))) //把form数据编下码
 	client := &http.Client{}
-	req, _ := http.NewRequest("POST", "http://42.62.67.240:8888/api/test/SaveCrash", body)
+	req, _ := http.NewRequest("POST", "http://0.0.0.0/api/test/SaveCrash", body)
 	//req.Header.Set("Content-Type", "application/x-www-form-urlencoded; param=value") //这个一定要加，不加form的值post不过去，被坑了两小时
 	fmt.Printf("%+v\n", req)    //看下发送的结构
 	resp, err := client.Do(req) //发送
