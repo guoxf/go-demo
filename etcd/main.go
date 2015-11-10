@@ -7,6 +7,7 @@ import (
 	"math/rand"
 	"regexp"
 	"runtime"
+	"strings"
 	"time"
 
 	"github.com/coreos/go-etcd/etcd"
@@ -16,8 +17,8 @@ import (
 var (
 	client        *etcd.Client
 	machines      = []string{"http://172.24.3.80:2379"}
-	appStatusReg  = regexp.MustCompile(`/serverstatus/(agent|auth|rank|chat)/[0-9]+`)
-	gameStatusReg = regexp.MustCompile(`/serverstatus/game/[0-9]+/[0-9]+`)
+	appStatusReg  = regexp.MustCompile(`/serverstatus/(agent|auth|rank|chat)/[0-9]+[0-9]`)
+	gameStatusReg = regexp.MustCompile(`/serverstatus/game/[0-9]+/[0-9]+[0-9]`)
 	num           = regexp.MustCompile(`[0-9]+`)
 
 	updateAppStatusSql  = `update app_list set status=%d where id=%s`
@@ -155,13 +156,24 @@ func main() {
 	// c := make(chan os.Signal)
 	// signal.Notify(c)
 	// <-c
-
-	// if _, err := client.Set("/foo", "bar", 0); err != nil {
+	if strings.HasSuffix("/gosercverc/serverstatusc/game/2/1", "c") {
+		log.Println("/goserver/serverstatus/game/2/1c")
+	}
+	if _, err := client.Set("/goserver/serverstatus/game/1/2", "172.24.16.109:8009", 0); err != nil {
+		log.Fatal(err)
+	}
+	// if _, err := client.Set("/goserver/serverstatus/agent/11", "172.24.16.109:8009", 0); err != nil {
 	// 	log.Fatal(err)
 	// }
-	if res, err := client.Get("/root", true, true); err != nil {
-		log.Fatal(err)
-	} else {
-		recurisve2(res.Node)
-	}
+	// if _, err := client.Delete("/goserver/serverstatus/auth/8", false); err != nil {
+	// 	log.Fatal(err)
+	// }
+	// if _, err := client.Delete("/goserver/serverstatus/", true); err != nil {
+	// 	log.Fatal(err)
+	// }
+	// if res, err := client.Get("/root", true, true); err != nil {
+	// 	log.Fatal(err)
+	// } else {
+	// 	recurisve2(res.Node)
+	// }
 }

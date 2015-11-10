@@ -2,20 +2,21 @@ package main
 
 import (
 	"fmt"
-	"gopkg.in/mgo.v2"
-	"gopkg.in/mgo.v2/bson"
 	"net/url"
 	"time"
+
+	"gopkg.in/mgo.v2"
+	"gopkg.in/mgo.v2/bson"
 	"upper.io/db"
 	"upper.io/db/mongo"
 )
 
 var (
 	host           = "127.0.0.1:27017"
-	database       = "test"
-	userAccount    = "admin"
+	database       = "123"
+	userAccount    = "123"
 	pwd            = "123"
-	collectionName = "test"
+	collectionName = "123"
 )
 
 var settings = mongo.ConnectionURL{
@@ -33,12 +34,12 @@ type UserBaseInfo struct {
 }
 
 func main() {
-	switchDB()
+	testFormat2()
 }
 
 var (
 	regexCondition   = db.Cond{"sUserName": bson.M{"$regex": "无畏"}}
-	inCondition      = db.Cond{"sUserName": bson.M{"$in": []string{"寡言的安杰儿", "无畏的柯丝莫"}}}
+	inCondition      = db.Cond{"sUserName": bson.M{"$in": []string{"寡言的安杰儿", "猎犬乌鲁"}}}
 	ninCondition     = db.Cond{"sUserName": bson.M{"$nin": []string{"寡言的安杰儿", "无畏的柯丝莫"}}}
 	betweenCondition = db.And{
 		db.Cond{"nCreateTime >=": 1442322159},
@@ -92,14 +93,14 @@ func switchDB() {
 	}
 	res := collection.Find(inCondition)
 	fmt.Println(res.Count())
-	var userInfo []UserBaseInfo
+	var userInfo []*UserBaseInfo
 	err = res.Limit(10).All(&userInfo)
 	if err != nil {
 		fmt.Println(err)
 		return
 	}
 
-	fmt.Println(userInfo)
+	fmt.Println("userInfo", userInfo[0])
 
 	sess.Use("test2")
 	fmt.Println(sess.Collections())
@@ -152,4 +153,79 @@ func useMgo() {
 	}
 
 	fmt.Println(userInfo)
+}
+
+func testFormat() {
+	var heroMgr HeroManager
+	heroMgr.RoleId = 1
+	heroMgr.CurIndex = 0
+	heroMgr.Format[0] = []*FormatInfo{
+		&FormatInfo{HeroId: 1, Fighting: true},
+		&FormatInfo{HeroId: 2, Fighting: true},
+		&FormatInfo{HeroId: 3, Fighting: true},
+		&FormatInfo{HeroId: 4, Fighting: true},
+	}
+	heroMgr.Format[1] = []*FormatInfo{
+		&FormatInfo{HeroId: 3, Fighting: true},
+		&FormatInfo{HeroId: 2, Fighting: true},
+		&FormatInfo{HeroId: 1, Fighting: true},
+		&FormatInfo{HeroId: 4, Fighting: true},
+	}
+	heroMgr.Format[2] = []*FormatInfo{
+		&FormatInfo{HeroId: 3, Fighting: true},
+		&FormatInfo{HeroId: 2, Fighting: true},
+		&FormatInfo{HeroId: 1, Fighting: true},
+		&FormatInfo{HeroId: 4, Fighting: true},
+	}
+	heroMgr.Format[3] = []*FormatInfo{
+		&FormatInfo{HeroId: 3, Fighting: true},
+		&FormatInfo{HeroId: 2, Fighting: true},
+		&FormatInfo{HeroId: 1, Fighting: true},
+		&FormatInfo{HeroId: 4, Fighting: true},
+	}
+
+	sess, err := db.Open(mongo.Adapter, settings)
+	if err != nil {
+		fmt.Println(err.Error())
+		return
+	}
+	defer sess.Close()
+
+	collection, err := sess.Collection("heroformat")
+	if err != nil {
+		fmt.Println(err.Error())
+		return
+	}
+	fmt.Println(collection.Append(&heroMgr))
+}
+
+func testFormat2() {
+	sess, err := db.Open(mongo.Adapter, settings)
+	if err != nil {
+		fmt.Println(err.Error())
+		return
+	}
+	defer sess.Close()
+
+	collection, err := sess.Collection("heroformat")
+	if err != nil {
+		fmt.Println(err.Error())
+		return
+	}
+	res := collection.Find()
+	var heroMgr HeroManager
+	err = res.One(&heroMgr)
+	fmt.Println(heroMgr.Format[1][1], err)
+}
+
+type FormatInfo struct {
+	HeroId   int
+	Fighting bool
+}
+
+type HeroManager struct {
+	RoleId    int32               `bson:"roleid"`
+	Format    [4][]*FormatInfo    `bson:"format"`
+	CurFormat map[int]*FormatInfo `bson:"-"`
+	CurIndex  int                 `bson:"curindex"`
 }
