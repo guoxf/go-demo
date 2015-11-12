@@ -129,6 +129,9 @@ func main() {
 	//	fmt.Println(IsIp("992.168.1.2"))
 	//	spider()
 	// fmt.Println(getUid("user:352:baseInfo1222"))
-	fmt.Println(findIps("http://172.24.12.1.2:81/static/client/"))
-	fmt.Println(trimFileExt("test.2010.txt"))
+	// fmt.Println(findIps("http://172.24.12.1.2:81/static/client/"))
+	// fmt.Println(trimFileExt("test.2010.txt"))
+
+	reg := regexp.MustCompile("(([a-z]+)|(\\d+))")
+	fmt.Println(reg.FindAllString("a=15;b=400;c=5;d=3;e=1", -1))
 }
