@@ -13,9 +13,9 @@ import (
 
 var (
 	host           = "127.0.0.1:27017"
-	database       = "123"
-	userAccount    = "123"
-	pwd            = "123"
+	database       = "test"
+	userAccount    = "test"
+	pwd            = "test"
 	collectionName = "123"
 )
 
@@ -34,7 +34,15 @@ type UserBaseInfo struct {
 }
 
 func main() {
-	testFormat2()
+	testFormat()
+	a := []int{1, 2, 3, 4, 5}
+	fmt.Println(a)
+	b := a[2]
+	a = append(a[:2], a[3:]...)
+	fmt.Println(a, b)
+	c := append([]int{b}, a[1:]...)
+	a = append(a[:1], c...)
+	fmt.Println(a, c)
 }
 
 var (
@@ -157,7 +165,7 @@ func useMgo() {
 
 func testFormat() {
 	var heroMgr HeroManager
-	heroMgr.RoleId = 1
+	heroMgr.RoleId = 2
 	heroMgr.CurIndex = 0
 	heroMgr.Format[0] = []*FormatInfo{
 		&FormatInfo{HeroId: 1, Fighting: true},
@@ -218,9 +226,40 @@ func testFormat2() {
 	fmt.Println(heroMgr.Format[1][1], err)
 }
 
+func testUpdateArray() {
+	sess, err := db.Open(mongo.Adapter, settings)
+	if err != nil {
+		fmt.Println(err.Error())
+		return
+	}
+	defer sess.Close()
+
+	collection, err := sess.Collection("heroformat")
+	if err != nil {
+		fmt.Println(err.Error())
+		return
+	}
+	res := collection.Find(db.Cond{"roleid": 1})
+	// err = res.Update(bson.M{"format.1": []*FormatInfo{
+	// 	&FormatInfo{HeroId: 3, Fighting: true},
+	// 	&FormatInfo{HeroId: 2, Fighting: true},
+	// 	&FormatInfo{HeroId: 1, Fighting: true},
+	// 	&FormatInfo{HeroId: 4, Fighting: true},
+	// }})
+	// fmt.Println(err)
+
+	err = res.Update(bson.M{
+		"format.1.0": &FormatInfo{HeroId: 4, Fighting: true},
+		"format.1.3": &FormatInfo{HeroId: 3, Fighting: true},
+	})
+
+	fmt.Println(err)
+}
+
 type FormatInfo struct {
-	HeroId   int
-	Fighting bool
+	HeroId   int  `bson:"heroid"`
+	Fighting bool `bson:"fighting"`
+	Index    int  `bson:"-"`
 }
 
 type HeroManager struct {
