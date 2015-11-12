@@ -1,7 +1,6 @@
 package main
 
 import (
-	"encoding/json"
 	"fmt"
 	"io/ioutil"
 	"net/http"
@@ -9,6 +8,7 @@ import (
 	"time"
 )
 
+//模拟登录，获取英雄数据、资源数据
 //创角协议：username=elvin2&sex=3&t=1&sid=p30qc1aqj2zeepv013ed0f0d&figure=22000004
 //升级武具：userid=124710&id=2140799&sid=p30qc1aqj2zeepv013ed0f0d&t=3004&cgl=-20
 //休息：id=2140799&sid=p30qc1aqj2zeepv013ed0f0d&t=3008&userid=124710
@@ -21,6 +21,10 @@ import (
 //打关卡：isxz=0&type=2&sid=p30qc1aqj2zeepv013ed0f0d&t=5005&userid=124275
 //isxz=0&type=3&sid=p30qc1aqj2zeepv013ed0f0d&t=5005&userid=124275
 //isxz=0&type=1&sid=p30qc1aqj2zeepv013ed0f0d&t=5005&userid=124275
+//挖矿：x=3&sid=p30qc1aqj2zeepv013ed0f0d&t=2004&time=58280050.06341269984841347&cmd=exploit&y=3&userid=124275
+//向下挖，或者横向挖 57932450.7542639984749258
+// 								 58280050.06341269984841347
+//{"ret":1,"msg":"无法挖掘这块土，请在冒险中提升十字镐品质。"}
 //修改sid和sessionid的值要改成登录时的
 func main() {
 	sessionCookie := http.Cookie{}
@@ -28,7 +32,7 @@ func main() {
 	sessionCookie.Value = "p30qc1aqj2zeepv013ed0f0d"
 	sessionCookie.Expires = time.Now().Add(100 * time.Second)
 	client := &http.Client{}
-	body := ioutil.NopCloser(strings.NewReader("isxz=0&type=3&sid=p30qc1aqj2zeepv013ed0f0d&t=5005&userid=124275"))
+	body := ioutil.NopCloser(strings.NewReader("x=5&sid=p30qc1aqj2zeepv013ed0f0d&t=2004&time=58280050.06341269984841347&cmd=exploit&y=4&userid=124275"))
 	req, _ := http.NewRequest("POST", "http://game.360mxwk.90tank.com/service/main.ashx", body) //http://game.3602mxwk.90tank.com/service/main.ashx
 
 	req.AddCookie(&sessionCookie)
@@ -45,9 +49,9 @@ func main() {
 	data, _ := ioutil.ReadAll(resp.Body)
 	fmt.Println(string(data), err)
 
-	m := make(map[string]Ab)
-	m["1"] = Ab{Name: "11"}
-	fmt.Println(json.Marshal(&m))
+	// m := make(map[string]Ab)
+	// m["1"] = Ab{Name: "11"}
+	// fmt.Println(json.Marshal(&m))
 }
 
 type Ab struct {
