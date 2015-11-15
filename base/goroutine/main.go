@@ -117,7 +117,7 @@ func main() {
 	// 	gainStone = rise * 3
 	// case challengedRank < 1000:
 	// 	gainStone = rise * 1
-	// case challengedRank < 2000: //宝石数量都是整数，所以获得1.2个算两个
+	// case challengedRank < 2000:
 	// 	f := float32(rise) * 0.2
 	// 	if rise%5 > 0 {
 	// 		gainStone = int(f) + 1
