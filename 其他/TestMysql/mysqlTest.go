@@ -9,7 +9,7 @@
 
 // func main() { //main函数
 
-// 	db, err := sql.Open("mysql", "swtsoft:swtsoft@tcp(localhost:3306)/happyacc?charset=utf8")
+// 	db, err := sql.Open("mysql", "admin:123456@tcp(localhost:3306)/happyacc?charset=utf8")
 // 	//数据库连接字符串，别告诉我看不懂。端口一定要写/
 // 	if err != nil { //连接成功 err一定是nil否则就是报错
 // 		panic(err.Error())       //抛出异常
@@ -44,6 +44,7 @@ package main
 import (
 	"database/sql"
 	"fmt"
+
 	"github.com/astaxie/beego/orm"
 	_ "github.com/go-sql-driver/mysql"
 	// "log"
@@ -54,7 +55,7 @@ var db *sql.DB
 
 func main() {
 	driverName := "mysql"
-	dataSource := "swtsoft:swtsoft@tcp(192.168.3.2:3306)/MyMovie?charset=utf8"
+	dataSource := "admin:123456@tcp(localhost:3306)/test?charset=utf8"
 	maxIdle := 20
 	maxOpen := 20
 	// db, _ = sql.Open(driverName, dataSource)
