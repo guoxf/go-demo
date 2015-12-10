@@ -25,4 +25,6 @@ _testmain.go
 *.pb.go
 ssh/id_rsa
 .DS_Store
+spider/result/
+*.go~
 *.swp
