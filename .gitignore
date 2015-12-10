@@ -27,3 +27,4 @@ ssh/id_rsa
 .DS_Store
 spider/result/
 *.go~
+*.swp
