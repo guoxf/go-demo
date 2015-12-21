@@ -29,3 +29,4 @@ spider/result/
 *.go~
 *.swp
 angular2-quickstart/node_modules/
+angular-demo/node_modules
