@@ -28,3 +28,4 @@ ssh/id_rsa
 spider/result/
 *.go~
 *.swp
+angular2-quickstart/node_modules/
