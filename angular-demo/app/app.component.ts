@@ -1,6 +1,7 @@
 import {Component} from 'angular2/core';
 import {Hero} from './hero'
 import {HeroDetailComponent} from './hero-detail.component';
+import {Unless} from './unless.component'
 
 var HEROES: Hero[] = [
     { id: 11, name: "Mr. Nice" },
@@ -28,6 +29,9 @@ var HEROES: Hero[] = [
             </li>
         </ul>
         <hero-detail [hero]="selectedHero"></hero-detail>
+        <ul>
+  <li *unless="expr"></li>
+</ul>
             `,
     styles: [`
   .heroes {list-style-type: none; margin-left: 1em; padding: 0; width: 10em;}
@@ -45,7 +49,7 @@ var HEROES: Hero[] = [
   }
   .selected { background-color: #EEE; color: #369; }
   `],
-    directives: [HeroDetailComponent]
+    directives: [HeroDetailComponent,Unless]
 })
 export class AppComponent {
     public title = 'Tour of Heros';
