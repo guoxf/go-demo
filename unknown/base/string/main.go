@@ -93,5 +93,7 @@ func main() {
 	date, err = time.ParseInLocation("2006-01-02", "2015-08-06", loc)
 	fmt.Println(date.Unix())
 	fmt.Println(time.Date(date.Year(), date.Month(), date.Day(), date.Hour(), 0, 0, 0, time.Local))
-
+    var s string
+    fmt.Scanf("%s", &s)
+    fmt.Println(s)
 }

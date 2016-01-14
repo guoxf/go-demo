@@ -30,3 +30,6 @@ spider/result/
 *.swp
 angular2-quickstart/node_modules/
 angular-demo/node_modules
+stat/game.log.append
+stat/game.log
+stat/test.log.append
