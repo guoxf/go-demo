@@ -33,3 +33,4 @@ angular-demo/node_modules
 stat/game.log.append
 stat/game.log
 stat/test.log.append
+/.project
