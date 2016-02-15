@@ -34,3 +34,5 @@ stat/game.log.append
 stat/game.log
 stat/test.log.append
 /.project
+dlv/debug
+unknown/base/json/debug
