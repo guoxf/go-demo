@@ -36,3 +36,5 @@ stat/test.log.append
 /.project
 dlv/debug
 unknown/base/json/debug
+compose/dst.txt
+compose/dst2.txt

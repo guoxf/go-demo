@@ -1,0 +1,10 @@
+{
+	"srcPath":"./src.txt",
+	"dstPath":"./dst2.txt",
+	"prefix":"",
+	"suffix":"",
+	"sep":"=",
+	"sep2":";",
+	"sep3":"\t",
+	"ids":["1","2","3","4","5","a","b"]
+}
