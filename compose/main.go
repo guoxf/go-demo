@@ -89,7 +89,7 @@ func composeStr(n int, line string, config ComposedConfig) (string, error) {
 		array[i] = fmt.Sprintf("%s%s%s", config.Ids[i], config.Sep, array[i])
 	}
 	line = strings.Join(array, config.Sep2)
-	line = fmt.Sprintf("%s%s%s\n", config.Prefix, line, config.Suffix)
+	line = fmt.Sprintf("%s%s%s\r\n", config.Prefix, line, config.Suffix)
 	return line, nil
 }
 
