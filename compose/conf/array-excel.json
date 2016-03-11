@@ -1,6 +1,6 @@
 {
 	"srcPath":"./sample/sample.xlsx",
-	"dstPath":"./tmp/array.xlsx",
+	"dstPath":"./sample/sample.xlsx",
 	"prefix":"[",
 	"suffix":"]",
 	"sep":"",
