@@ -1,1 +1,1 @@
-compose.exe --config="./config.json"
+compose.exe --config="./conf/config.json"

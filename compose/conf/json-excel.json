@@ -1,0 +1,15 @@
+{
+	"srcPath":"./sample/sample.xlsx",
+	"dstPath":"./tmp/json.xlsx",
+	"prefix":"{",
+	"suffix":"}",
+	"sep":":",
+	"sep2":",",
+	"sep3":"\t",
+	"ids":["\"key1\"","\"key2\"","\"key3\"","\"key4\"","\"key5\"","\"a\"","\"b\""],
+	"startRow":4,
+	"startCol":2,
+	"endCol":3, 
+	"replaceCol":4,
+	"endStr":"End"
+}

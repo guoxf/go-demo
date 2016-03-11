@@ -1,0 +1,15 @@
+{
+	"srcPath":"./sample/sample.txt",
+	"dstPath":"./tmp/default.txt",
+	"prefix":"",
+	"suffix":"",
+	"sep":"=",
+	"sep2":";",
+	"sep3":"\t",
+	"ids":["1","2","3","4","5","a","b"],
+	"startRow":4,
+	"startCol":2,
+	"endCol":3, 
+	"replaceCol":4,
+	"endStr":"End"
+}

@@ -1,0 +1,15 @@
+{
+	"srcPath":"./sample/sample.txt",
+	"dstPath":"./tmp/array.txt",
+	"prefix":"[",
+	"suffix":"]",
+	"sep":"",
+	"sep2":",",
+	"sep3":"\t",
+	"ids":["","","","","","",""],
+	"startRow":4,
+	"startCol":2,
+	"endCol":3, 
+	"replaceCol":4,
+	"endStr":"End"
+}
