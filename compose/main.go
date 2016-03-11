@@ -35,33 +35,42 @@ type ComposedConfig struct {
 
 var config ComposedConfig
 
+const (
+	HELP_SRC_TYPE = `
+	选择要从哪里读取数据
+		输入1从excel中读取数据并写回excel
+		输入2从文本文件中读取
+	`
+	HELP_FORMAT = `
+	选择生成格式： 
+		输入1，生成1=3;2=7;3=7;4=2;5=1;a=200;b=30000
+		输入2，生成[3,7,7,2,1,200,30000]
+		输入3，生成{"key1":3,"key2":7,"key3":7,"key4":2,"key5":1,"a":200,"b":30000}
+	`
+)
+
 func loadConfig() {
-	fmt.Println(`
-选择要从哪里读取数据
-	输入1从excel中读取数据并写回excel
-	输入2从文本文件中读取
-	`)
 	var srcType string
 	for {
+		fmt.Println(HELP_SRC_TYPE)
 		fmt.Scanf("%s", &srcType)
 		if srcType == "1" || srcType == "2" {
 			break
 		}
 	}
+	fmt.Println("选择的数据源类型：", srcType)
 
-	fmt.Println(`
-选择生成格式： 
-	输入1，生成1=3;2=7;3=7;4=2;5=1;a=200;b=30000
-	输入2，生成[3,7,7,2,1,200,30000]
-	输入3，生成{"key1":3,"key2":7,"key3":7,"key4":2,"key5":1,"a":200,"b":30000}
-	`)
 	var genFormat string
+	fmt.Println(HELP_FORMAT)
 	for {
 		fmt.Scanf("%s", &genFormat)
 		if genFormat == "1" || genFormat == "2" || genFormat == "3" {
 			break
 		}
+		fmt.Println(HELP_FORMAT)
 	}
+	fmt.Println("选择生成的数据格式：", srcType)
+
 	var configPath string
 	switch genFormat {
 	case "1":
@@ -124,6 +133,7 @@ func composeStr(n int, line string, config ComposedConfig) (string, error) {
 func pressAnyKey() {
 	fmt.Println("按任意键关闭！")
 	var s string
+	fmt.Scanf("%s", &s)
 	fmt.Scanf("%s", &s)
 	fmt.Println(s)
 }
@@ -199,7 +209,6 @@ func fromExcel() {
 			}
 			result := strings.Join(array, config.Sep2)
 			result = fmt.Sprintf("%s%s%s\r\n", config.Prefix, result, config.Suffix)
-			fmt.Println(result)
 			row.Cells[config.ReplaceCol-1].SetString(result)
 			if row.Cells[0].String() == config.EndStr {
 				break
