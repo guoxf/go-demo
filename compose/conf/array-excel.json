@@ -8,8 +8,8 @@
 	"sep3":"\t",
 	"ids":["","","","","","",""],
 	"startRow":4,
-	"startCol":2,
-	"endCol":3, 
+	"startCol":7,
+	"endCol":8,
 	"replaceCol":4,
 	"endStr":"End"
 }
