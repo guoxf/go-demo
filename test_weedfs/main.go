@@ -2,7 +2,7 @@ package main
 
 import (
 	"bytes"
-	"encoding/json"
+	//	"encoding/json"
 	"fmt"
 	"io"
 	"log"
@@ -64,7 +64,7 @@ func newfileUploadRequest(uri string, params map[string]string, paramName, path 
 
 func main() {
 	//fmt.Println(Upload("test.txt"))
-	request, err := newfileUploadRequest("http://localhost:9334/submit", map[string]string{"aa": "12"}, "file", "test.txt")
+	request, err := newfileUploadRequest("http://localhost:8888/food/", map[string]string{"aa": "12"}, "file", "test.txt")
 	if err != nil {
 		log.Fatal(err)
 		return
@@ -82,13 +82,13 @@ func main() {
 		resp.Body.Close()
 		fmt.Println(resp.StatusCode)
 		fmt.Println(resp.Header)
-		if resp.StatusCode == http.StatusCreated {
-			var rep ResponseData
-			err = json.Unmarshal(body.Bytes(), &rep)
-			fmt.Println(rep, err)
-		} else {
-			fmt.Println(body)
-		}
+		//		if resp.StatusCode == http.StatusCreated {
+		//			var rep ResponseData
+		//			err = json.Unmarshal(body.Bytes(), &rep)
+		//			fmt.Println(rep, err)
+		//		} else {
+		fmt.Println(body)
+		//		}
 
 	}
 }
