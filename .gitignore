@@ -40,3 +40,4 @@ compose/dst.txt
 compose/dst2.txt
 compose/dst3.txt
 compose/tmp/
+test_weedfs/tmp/
