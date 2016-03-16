@@ -2,6 +2,7 @@ package main
 
 import (
 	"bytes"
+	"encoding/json"
 	"fmt"
 	"io"
 	"log"
@@ -38,23 +39,36 @@ func newfileUploadRequest(uri string, params map[string]string, paramName, path 
 		return nil, err
 	}
 	_, err = io.Copy(part, file)
+	if err != nil {
+		return nil, err
+	}
 
 	for key, val := range params {
-		_ = writer.WriteField(key, val)
+		err = writer.WriteField(key, val)
+		if err != nil {
+			return nil, err
+		}
 	}
 	err = writer.Close()
 	if err != nil {
 		return nil, err
 	}
-	return http.NewRequest("POST", uri, body)
+	req, err := http.NewRequest("POST", uri, body)
+	if err != nil {
+		return nil, err
+	}
+	//如果不设置会报request Content-Type isn't multipart/form-data
+	req.Header.Set("Content-Type", writer.FormDataContentType())
+	return req, nil
 }
 
 func main() {
-	request, err := newfileUploadRequest("http://localhost:9334/submit", map[string]string{}, "file", "./test.txt")
+	//fmt.Println(Upload("test.txt"))
+	request, err := newfileUploadRequest("http://localhost:9334/submit", map[string]string{"aa": "12"}, "file", "test.txt")
 	if err != nil {
 		log.Fatal(err)
+		return
 	}
-	request.Header.Set("Content-Type", "multipart/form-data")
 	client := &http.Client{}
 	resp, err := client.Do(request)
 	if err != nil {
@@ -68,6 +82,13 @@ func main() {
 		resp.Body.Close()
 		fmt.Println(resp.StatusCode)
 		fmt.Println(resp.Header)
-		fmt.Println(body)
+		if resp.StatusCode == http.StatusCreated {
+			var rep ResponseData
+			err = json.Unmarshal(body.Bytes(), &rep)
+			fmt.Println(rep, err)
+		} else {
+			fmt.Println(body)
+		}
+
 	}
 }

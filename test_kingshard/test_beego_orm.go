@@ -11,7 +11,7 @@ import (
 
 func init() {
 	rand.Seed(time.Now().Unix())
-	orm.RegisterDriver("mysql", orm.DR_MySQL)
+	orm.RegisterDriver("mysql", orm.DRMySQL)
 	orm.RegisterDataBase("default", "mysql", "admin:123456@tcp(127.0.0.1:9696)/kingshard")
 	orm.RegisterModel(new(TestShardJoin))
 	testDel()
