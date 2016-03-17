@@ -67,8 +67,15 @@ func newfileUploadRequest(uri string, params map[string]string, paramName, path 
 }
 
 func main() {
-	downFile("http://localhost:8888/image/plate_detect.jpg")
-	downFile("http://localhost:8888/submit/test.txt")
+	http.HandleFunc("/hello", HelloServer)
+	err := http.ListenAndServe(":8096", nil)
+	if err != nil {
+		log.Fatal("ListenAndServe: ", err)
+	}
+	//testWeedoUpload("test.txt")
+	//testWeedoDelete("5,06d8deeb6a")
+	//downFile("http://localhost:8888/image/plate_detect.jpg")
+	//downFile("http://localhost:8888/submit/test.txt")
 }
 
 func testSubmit() {
@@ -131,14 +138,41 @@ func testFiler() {
 	}
 }
 
-func testWeedo() {
-	client := weedo.NewClient("localhost:9333", "localhost:8888")
-	dir, err := client.Filer("localhost:8888").Dir("/")
+var client = weedo.NewClient("localhost:9333", "localhost:8888")
+
+func testWeedoUpload(fileName string) {
+	file, err := os.Open(fileName)
 	if err != nil {
 		fmt.Println(err)
 		return
 	}
-	fmt.Println(dir)
+	defer file.Close()
+	fid, size, err := client.AssignUpload(fileName, "", file)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	fmt.Println(fid, size)
+}
+
+func testWeedoDelete(fid string) {
+	fmt.Println(client.Delete(fid, 1))
+}
+
+func HelloServer(w http.ResponseWriter, req *http.Request) {
+	resp, err := http.Get("http://localhost:8888/image/plate_detect.jpg")
+	if err != nil {
+		fmt.Println(err)
+		http.NotFound(w, req)
+		return
+	}
+	defer resp.Body.Close()
+	for k, v := range resp.Header {
+		if len(v) > 0 {
+			w.Header().Set(k, v[0])
+		}
+	}
+	io.Copy(w, resp.Body)
 }
 
 func downFile(url string) (pix []byte, err error) {
@@ -160,7 +194,8 @@ func downFile(url string) (pix []byte, err error) {
 		fmt.Println(err)
 		return
 	}
-	fmt.Println(string(pix))
+	//fmt.Println(string(pix))
+	fmt.Println(resp.Header)
 	return
 }
 
