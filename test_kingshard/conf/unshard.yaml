@@ -54,11 +54,30 @@ nodes :
 schema :
     db : kingshard
     nodes: [node1]
-    default: node1
+    default: node1      
     shard:
-    -
+    -   
         table: test_shard_hash
         key: id
         nodes: [node1]
         type: hash
         locations: [4]
+    -   
+        table: test_shard_range
+        key: id
+        type: range
+        nodes: [node1]
+        locations: [5]
+        table_row_limit: 500000
+    -
+        table: test_shard_year
+        key: ctime
+        type: date_year
+        nodes: [node1]
+        date_range: [2015-2019]
+    -
+        table: test_shard_year2
+        key: ctime
+        type: date_year
+        nodes: [node1]
+        date_range: [2015-2019]
