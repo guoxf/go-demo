@@ -17,6 +17,7 @@ mkdir v3
 set logPath=%dataPath%\log
 mkdir %logPath%
 mkdir d:\tmp\f1
+mkdir d:\tmp\f2
 
 set peers=localhost:9333,localhost:9334,localhost:9335
 ::-defaultReplication=100
@@ -28,4 +29,5 @@ start /b weed -v=3 volume -port=8081 -dir=%dataPath%\v1 -mserver=localhost:9333 
 start /b weed -v=3 volume -port=8082 -dir=%dataPath%\v2 -mserver=localhost:9334 -dataCenter=dc1 >%logPath%\v2.log 2>&1
 start /b weed -v=3 volume -port=8083 -dir=%dataPath%\v3 -mserver=localhost:9335 -dataCenter=dc2 >%logPath%\v3.log 2>&1
 
-start /b weed filer -port=8888 -dir=d:\tmp\f1 -master=localhost:9333 >d:\tmp\log\f.log 2>&1
+start /b weed filer -port=8888 -dir=d:\tmp\f1 -master=localhost:9333 -redis.server=localhost:6379 >d:\tmp\log\f1.log 2>&1
+start /b weed filer -port=8889 -dir=d:\tmp\f2 -master=localhost:9333 -redis.server=localhost:6379 >d:\tmp\log\f2.log 2>&1

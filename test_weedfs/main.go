@@ -67,12 +67,14 @@ func newfileUploadRequest(uri string, params map[string]string, paramName, path 
 }
 
 func main() {
+	//testFiler()
 	http.HandleFunc("/hello", HelloServer)
 	err := http.ListenAndServe(":8096", nil)
 	if err != nil {
 		log.Fatal("ListenAndServe: ", err)
 	}
-	//testWeedoUpload("test.txt")
+
+	//testWeedoUpload("plate_detect.jpg")
 	//testWeedoDelete("5,06d8deeb6a")
 	//downFile("http://localhost:8888/image/plate_detect.jpg")
 	//downFile("http://localhost:8888/submit/test.txt")
@@ -160,7 +162,7 @@ func testWeedoDelete(fid string) {
 }
 
 func HelloServer(w http.ResponseWriter, req *http.Request) {
-	resp, err := http.Get("http://localhost:8888/image/plate_detect.jpg")
+	resp, err := http.Get("http://localhost:8889/image/plate_detect.jpg")
 	if err != nil {
 		fmt.Println(err)
 		http.NotFound(w, req)
