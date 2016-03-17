@@ -64,7 +64,7 @@ func newfileUploadRequest(uri string, params map[string]string, paramName, path 
 
 func main() {
 	//fmt.Println(Upload("test.txt"))
-	request, err := newfileUploadRequest("http://localhost:8888/food/", map[string]string{"aa": "12"}, "file", "test.txt")
+	request, err := newfileUploadRequest("http://localhost:8888/image/", map[string]string{"aa": "12"}, "file", "plate_detect.jpg")
 	if err != nil {
 		log.Fatal(err)
 		return

@@ -25,7 +25,7 @@ func testShardYear(db *sql.DB) {
 		for j := 0; j < count; j++ {
 			go func(k, y int) {
 				for i := k * num * y; i < (k+1)*num*y; i++ {
-					strSql := fmt.Sprintf(`insert into test_shard_year2(id,name,ctime,ctime2) values(%d,"hello","201%d-02-22 13:23:45","201%d-02-22 13:23:45");`, i+1, y+n, y+n)
+					strSql := fmt.Sprintf(`insert into test_shard_year(id,name,ctime,ctime2) values(%d,"hello","201%d-02-22 13:23:45","201%d-02-22 13:23:45");`, i+1, y+n, y+n)
 					_, err := db.Exec(strSql)
 					if err != nil {
 						fmt.Println(err.Error()) // proper error handling instead of panic in your app
