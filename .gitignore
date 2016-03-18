@@ -41,3 +41,5 @@ compose/dst2.txt
 compose/dst3.txt
 compose/tmp/
 test_weedfs/tmp/
+angular-quickstart/node_modules/
+angular-quickstart/typings/
