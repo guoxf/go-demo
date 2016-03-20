@@ -1,0 +1,101 @@
+
+<div *ngIf="newModel" class="edit-dialog">
+<button (click)="goBack()">Back</button>
+<button (click)="save()">save</button>
+  <div>
+    <label>用户ID: </label>
+    <input type="text" [(ngModel)]="newModel.Uid" placeholder="用户ID" />
+  </div>
+<div>
+    <label>昵称: </label>
+    <input type="text" [(ngModel)]="newModel.Nickname" placeholder="昵称" />
+  </div>
+<div>
+    <label>性别: </label>
+    <input type="text" [(ngModel)]="newModel.Sex" placeholder="性别" />
+  </div>
+<div>
+    <label>生日: </label>
+    <input type="text" [(ngModel)]="newModel.Birthday" placeholder="生日" />
+  </div>
+<div>
+    <label>qq号: </label>
+    <input type="text" [(ngModel)]="newModel.Qq" placeholder="qq号" />
+  </div>
+<div>
+    <label>登录次数: </label>
+    <input type="text" [(ngModel)]="newModel.Login" placeholder="登录次数" />
+  </div>
+<div>
+    <label>注册IP: </label>
+    <input type="text" [(ngModel)]="newModel.RegIp" placeholder="注册IP" />
+  </div>
+<div>
+    <label>注册时间: </label>
+    <input type="text" [(ngModel)]="newModel.RegTime" placeholder="注册时间" />
+  </div>
+<div>
+    <label>最后登录IP: </label>
+    <input type="text" [(ngModel)]="newModel.LastLoginIp" placeholder="最后登录IP" />
+  </div>
+<div>
+    <label>最后登录时间: </label>
+    <input type="text" [(ngModel)]="newModel.LastLoginTime" placeholder="最后登录时间" />
+  </div>
+<div>
+    <label>会员状态: </label>
+    <input type="checkbox" [(ngModel)]="newModel.Status" placeholder="会员状态" />
+  </div>
+<div>
+    <label>last_login_role: </label>
+    <input type="text" [(ngModel)]="newModel.LastLoginRole" placeholder="last_login_role" />
+  </div>
+<div>
+    <label>个人主页显示角色: </label>
+    <input type="text" [(ngModel)]="newModel.ShowRole" placeholder="个人主页显示角色" />
+  </div>
+<div>
+    <label>signature: </label>
+    <input type="text" [(ngModel)]="newModel.Signature" placeholder="signature" />
+  </div>
+<div>
+    <label>pos_province: </label>
+    <input type="text" [(ngModel)]="newModel.PosProvince" placeholder="pos_province" />
+  </div>
+<div>
+    <label>pos_city: </label>
+    <input type="text" [(ngModel)]="newModel.PosCity" placeholder="pos_city" />
+  </div>
+<div>
+    <label>pos_district: </label>
+    <input type="text" [(ngModel)]="newModel.PosDistrict" placeholder="pos_district" />
+  </div>
+<div>
+    <label>pos_community: </label>
+    <input type="text" [(ngModel)]="newModel.PosCommunity" placeholder="pos_community" />
+  </div>
+<div>
+    <label>用户积分: </label>
+    <input type="text" [(ngModel)]="newModel.Score1" placeholder="用户积分" />
+  </div>
+<div>
+    <label>score2: </label>
+    <input type="text" [(ngModel)]="newModel.Score2" placeholder="score2" />
+  </div>
+<div>
+    <label>score3: </label>
+    <input type="text" [(ngModel)]="newModel.Score3" placeholder="score3" />
+  </div>
+<div>
+    <label>score4: </label>
+    <input type="text" [(ngModel)]="newModel.Score4" placeholder="score4" />
+  </div>
+<div>
+    <label>con_check: </label>
+    <input type="text" [(ngModel)]="newModel.ConCheck" placeholder="con_check" />
+  </div>
+<div>
+    <label>total_check: </label>
+    <input type="text" [(ngModel)]="newModel.TotalCheck" placeholder="total_check" />
+  </div>  
+</div>

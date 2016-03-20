@@ -1,4 +1,4 @@
-System.register(['angular2/core', './user/user.component'], function(exports_1, context_1) {
+System.register(['angular2/core', './sysuser/sysuser.component', './sysuser/sysuser-detail.component', './dashboard.component', './sysuser/sysuser.service', 'angular2/http', 'angular2/router'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,26 +10,68 @@ System.register(['angular2/core', './user/user.component'], function(exports_1, 
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, user_component_1;
+    var core_1, sysuser_component_1, sysuser_detail_component_1, dashboard_component_1, sysuser_service_1, http_1, router_1;
     var AppComponent;
     return {
         setters:[
             function (core_1_1) {
                 core_1 = core_1_1;
             },
-            function (user_component_1_1) {
-                user_component_1 = user_component_1_1;
+            function (sysuser_component_1_1) {
+                sysuser_component_1 = sysuser_component_1_1;
+            },
+            function (sysuser_detail_component_1_1) {
+                sysuser_detail_component_1 = sysuser_detail_component_1_1;
+            },
+            function (dashboard_component_1_1) {
+                dashboard_component_1 = dashboard_component_1_1;
+            },
+            function (sysuser_service_1_1) {
+                sysuser_service_1 = sysuser_service_1_1;
+            },
+            function (http_1_1) {
+                http_1 = http_1_1;
+            },
+            function (router_1_1) {
+                router_1 = router_1_1;
             }],
         execute: function() {
             AppComponent = (function () {
                 function AppComponent() {
+                    this.title = 'Tour of Heroes';
                 }
                 AppComponent = __decorate([
                     core_1.Component({
                         selector: 'my-app',
-                        template: '<h1>My Angular 2 App</h1><user-list></user-list>',
-                        directives: [user_component_1.UserComponent]
-                    }), 
+                        template: "\n    <h1>{{title}}</h1>\n    <nav>\n    <a [routerLink]=\"['Dashboard']\">Dashboard</a>\n    <a [routerLink]=\"['Heroes']\">Heroes</a>\n    </nav>\n    <router-outlet></router-outlet>\n    ",
+                        directives: [
+                            router_1.ROUTER_DIRECTIVES
+                        ],
+                        providers: [
+                            router_1.ROUTER_PROVIDERS,
+                            sysuser_service_1.SysUserService,
+                            http_1.HTTP_PROVIDERS
+                        ],
+                        styleUrls: ['app/app.component.css']
+                    }),
+                    router_1.RouteConfig([
+                        {
+                            path: '/dashboard',
+                            name: 'Dashboard',
+                            component: dashboard_component_1.DashboardComponent,
+                            useAsDefault: true
+                        },
+                        {
+                            path: '/detail/:id/:action',
+                            name: 'SysUserDetail',
+                            component: sysuser_detail_component_1.SysUserDetailComponent
+                        },
+                        {
+                            path: '/heroes',
+                            name: 'Heroes',
+                            component: sysuser_component_1.SysUserComponent
+                        }
+                    ]), 
                     __metadata('design:paramtypes', [])
                 ], AppComponent);
                 return AppComponent;
