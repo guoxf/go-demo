@@ -43,3 +43,9 @@ compose/tmp/
 test_weedfs/tmp/
 angular-quickstart/node_modules/
 angular-quickstart/typings/
+test_kingshard/log/
+angular-quickstart/app/*/*.js
+angular-quickstart/app/*.js
+angular-quickstart/app/lib/*.js
+angular-quickstart/app/lib/*.js.map
+angular-quickstart/app/*/*.js.map

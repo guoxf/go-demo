@@ -52,7 +52,7 @@ nodes :
 # schema defines which db can be used by client and this db's sql will be executed in which nodes, 
 # the db is also the default database
 schema :
-    db : kingshard
+    db : opencenter
     nodes: [node1]
     default: node1      
     shard:

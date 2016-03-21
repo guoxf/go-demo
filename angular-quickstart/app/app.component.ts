@@ -1,10 +1,49 @@
 import {Component} from 'angular2/core';
-import {UserComponent} from './user/user.component'
+import {SysUserComponent} from './sysuser/sysuser.component'
+import {SysUserDetailComponent} from './sysuser/sysuser-detail.component'
+import {DashboardComponent} from './dashboard.component'
+import {SysUserService} from './sysuser/sysuser.service'
+import {HTTP_PROVIDERS} from 'angular2/http'
+import {RouteConfig, ROUTER_DIRECTIVES, ROUTER_PROVIDERS} from 'angular2/router'
 
 @Component({
-    selector:'my-app',
-    template:'<h1>My Angular 2 App</h1><user-list></user-list>',
-    directives: [UserComponent]
+    selector: 'my-app',
+    template: `
+    <h1>{{title}}</h1>
+    <nav>
+    <a [routerLink]="['Dashboard']">Dashboard</a>
+    <a [routerLink]="['Heroes']">Heroes</a>
+    </nav>
+    <router-outlet></router-outlet>
+    `,
+    directives: [
+        ROUTER_DIRECTIVES
+    ],
+    providers: [
+        ROUTER_PROVIDERS,
+        SysUserService,
+        HTTP_PROVIDERS
+    ],
+    styleUrls:['app/app.component.css']
 })
-export class AppComponent{
+@RouteConfig([
+    {
+        path: '/dashboard',
+        name: 'Dashboard',
+        component: DashboardComponent,
+        useAsDefault: true
+    },
+    {
+        path: '/detail/:id/:action',
+        name: 'SysUserDetail',
+        component: SysUserDetailComponent
+    },
+    {
+        path: '/heroes',
+        name: 'Heroes',
+        component: SysUserComponent
+    }
+])
+export class AppComponent {
+    title = 'Tour of Heroes'
 }
