@@ -49,3 +49,4 @@ angular-quickstart/app/*.js
 angular-quickstart/app/lib/*.js
 angular-quickstart/app/lib/*.js.map
 angular-quickstart/app/*/*.js.map
+webpack/node_modules/
