@@ -1,14 +1,14 @@
-import { Component, OnInit } from 'angular2/core';
+import { Component, OnInit } from '@angular/core';
 
 import { SysUser } from './sysuser/sysuser.model';
 import { SysUserService } from './sysuser/sysuser.service';
-import { Router } from 'angular2/router'
-
+import { Router } from '@angular/router-deprecated'
+import {templateRoot} from './lib/common'
 
 @Component({
     selector: 'my-dashboard',
-    templateUrl: 'app/dashboard.component.html',
-    styleUrls: ['app/dashboard.component.css']
+    templateUrl: templateRoot+'app/dashboard.component.html',
+    styleUrls: [templateRoot+'app/dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
     heroes: SysUser[] = [];

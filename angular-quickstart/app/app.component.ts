@@ -1,11 +1,11 @@
-import {Component} from 'angular2/core';
+import {Component} from '@angular/core';
 import {SysUserComponent} from './sysuser/sysuser.component'
 import {SysUserDetailComponent} from './sysuser/sysuser-detail.component'
 import {DashboardComponent} from './dashboard.component'
 import {SysUserService} from './sysuser/sysuser.service'
-import {HTTP_PROVIDERS} from 'angular2/http'
-import {RouteConfig, ROUTER_DIRECTIVES, ROUTER_PROVIDERS} from 'angular2/router'
-
+import {HTTP_PROVIDERS} from '@angular/http'
+import {RouteConfig, ROUTER_DIRECTIVES, ROUTER_PROVIDERS} from '@angular/router-deprecated'
+import {templateRoot} from './lib/common'
 @Component({
     selector: 'my-app',
     template: `
@@ -24,7 +24,7 @@ import {RouteConfig, ROUTER_DIRECTIVES, ROUTER_PROVIDERS} from 'angular2/router'
         SysUserService,
         HTTP_PROVIDERS
     ],
-    styleUrls:['app/app.component.css']
+    styleUrls:[templateRoot+'app/app.component.css']
 })
 @RouteConfig([
     {
