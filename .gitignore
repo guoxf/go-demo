@@ -50,3 +50,8 @@ angular-quickstart/app/lib/*.js
 angular-quickstart/app/lib/*.js.map
 angular-quickstart/app/*/*.js.map
 webpack/node_modules/
+.tags
+.tags_sorted_by_file
+goto/goto
+goto/goto.exe~
+string_byte/test
