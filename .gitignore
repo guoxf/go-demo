@@ -50,8 +50,13 @@ angular-quickstart/app/lib/*.js
 angular-quickstart/app/lib/*.js.map
 angular-quickstart/app/*/*.js.map
 webpack/node_modules/
+<<<<<<< HEAD
 .tags
 .tags_sorted_by_file
 goto/goto
 goto/goto.exe~
 string_byte/test
+=======
+servicediscovery/servicediscovery
+web3/web3
+>>>>>>> 9d3bbf6f376d05beb158d189fb4fc8560aff4b0f

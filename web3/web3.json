@@ -1,0 +1,14 @@
+{
+  "service": {
+    "name": "web3",
+    "tags": ["master"],
+    "address": "172.16.9.46",
+    "port": 10000,
+    "checks": [
+      {
+        "http": "http://172.16.9.46:10000/health",
+        "interval": "10s"
+      }
+    ]
+  }
+}

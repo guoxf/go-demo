@@ -1,12 +1,12 @@
 
-import {Component, OnInit} from 'angular2/core'
-import {RouteParams} from 'angular2/router'
+import {Component, OnInit} from '@angular/core'
+import {RouteParams} from '@angular/router-deprecated'
 import {SysUser, copySysUser, copySysUser2,newDefaultSysUser} from './sysuser.model'
 import {SysUserService} from './sysuser.service'
-
+import {templateRoot} from '../lib/common'
 @Component({
     selector: 'sysuser-detail',
-    templateUrl: 'app/sysuser/sysuser-detail.component.html'
+    templateUrl: templateRoot+'app/sysuser/sysuser-detail.component.html'
 })
 export class SysUserDetailComponent implements OnInit {
     public newModel: SysUser;

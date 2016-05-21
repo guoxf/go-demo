@@ -27,7 +27,7 @@ export interface SysUser extends BaseModel {
 }
 
 export function copySysUser(src: SysUser) {
-    var dst = {};
+    var dst :SysUser;
     dst.Uid = src.Uid;
     dst.Nickname = src.Nickname;
     dst.Sex = src.Sex;
@@ -84,5 +84,6 @@ export function copySysUser2(src: SysUser, dst: SysUser) {
 }
 
 export function newDefaultSysUser() {
-    return {};
+    var user :SysUser;
+    return user;
 }

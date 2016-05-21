@@ -1,15 +1,15 @@
 
-import {Component, OnInit} from 'angular2/core'
+import {Component, OnInit} from '@angular/core'
 import {SysUserService} from './sysuser.service'
 import {SysUser} from './sysuser.model'
 import {SysUserDetailComponent} from './sysuser-detail.component'
-import {Router} from 'angular2/router'
-
+import {Router} from '@angular/router-deprecated'
+import {templateRoot} from '../lib/common'
 @Component({
     selector: 'sysuser-list',
     directives: [SysUserDetailComponent],
     providers: [],
-    templateUrl: 'app/sysuser/sysuser.component.html'
+    templateUrl: templateRoot+'app/sysuser/sysuser.component.html'
 })
 export class SysUserComponent implements OnInit {
     public selected: SysUser;
