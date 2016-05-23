@@ -1,4 +1,4 @@
-for SERVICES in kube-proxy kubelet docker; do 
+for SERVICES in kube-proxy docker kubelet; do 
     systemctl restart $SERVICES
     systemctl enable $SERVICES
     systemctl status $SERVICES 
