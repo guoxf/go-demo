@@ -15,8 +15,8 @@
 # limitations under the License.
 
 
-MASTER_ADDRESS=${1:-"192.168.3.204"}
-NODE_ADDRESS=${2:-"192.168.3.205"}
+MASTER_ADDRESS=${1:-"172.16.9.203"}
+NODE_ADDRESS=${2:-"172.16.9.203"}
 
 cat <<EOF >/opt/kubernetes/cfg/kube-proxy
 # --logtostderr=true: log to standard error instead of files

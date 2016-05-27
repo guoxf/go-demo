@@ -15,7 +15,7 @@
 # limitations under the License.
 
 
-MASTER_ADDRESS=${1:-"192.168.3.204"}
+MASTER_ADDRESS=${1:-"172.16.9.203"}
 
 cat <<EOF >/opt/kubernetes/cfg/kube-controller-manager
 KUBE_LOGTOSTDERR="--logtostderr=true"

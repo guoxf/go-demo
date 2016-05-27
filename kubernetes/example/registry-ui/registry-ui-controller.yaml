@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  namespace: kube-system
+  name: registry-ui
+spec:
+  containers:
+    - name: registry-ui
+      image: 172.16.9.3:5000/atcol/docker-registry-ui
+      env:
+        - name: REG1
+          value: "http://172.16.9.3:5000/v1/"
+      ports:
+        - containerPort: 8080
+      resources:
+        limits:
+          cpu: "0.1"

@@ -4,7 +4,7 @@ metadata:
   namespace: kube-system
   name: consul
 spec:
-  replicas: 3
+  replicas: 1
   selector:
     app: consul
   template:
@@ -15,7 +15,7 @@ spec:
       containers:
         - name: consul
           command: [ "/bin/start", "-server", "-bootstrap-expect", "3", "-atlas", "account_user_name/consul", "-atlas-join", "-atlas-token", "%%ATLAS_TOKEN%%" ]
-          image: progrium/consul:latest
+          image: 172.16.9.3:5000/progrium/consul:latest
           imagePullPolicy: Always
           ports:
           - containerPort: 8500

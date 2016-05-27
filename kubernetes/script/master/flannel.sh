@@ -15,7 +15,7 @@
 # limitations under the License.
 
 
-ETCD_SERVERS=${1:-"http://192.168.3.204:4001"}
+ETCD_SERVERS=${1:-"http://172.16.9.203:4001"}
 FLANNEL_NET=${2:-"172.16.0.0/16"}
 
 
