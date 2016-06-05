@@ -1,0 +1,12 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: hadoop-master
+  namespace: spark-cluster
+spec:
+  ports:
+    - port: 8088
+      targetPort: 8088
+  type: NodePort
+  selector:
+    component: hadoop-master

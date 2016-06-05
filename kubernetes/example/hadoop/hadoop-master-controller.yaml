@@ -1,0 +1,36 @@
+kind: ReplicationController
+apiVersion: v1
+metadata:
+  name: hadoop-master-controller
+  namespace: spark-cluster
+spec:
+  replicas: 1
+  selector:
+    component: hadoop-master
+  template:
+    metadata:
+      labels:
+        component: hadoop-master
+    spec:
+      containers:
+        - name: hadoop-master
+          image: 172.16.9.3:5000/kiwenlau/hadoop-master:0.1.0
+          command: ["/root/start-ssh-serf.sh"]
+          ports:
+            - containerPort: 7373
+            - containerPort: 7946
+            - containerPort: 9000
+            - containerPort: 50010
+            - containerPort: 50020
+            - containerPort: 50070
+            - containerPort: 50075
+            - containerPort: 50090
+            - containerPort: 50475
+            - containerPort: 8030
+            - containerPort: 8031
+            - containerPort: 8033
+            - containerPort: 8040
+            - containerPort: 8042
+            - containerPort: 8060
+            - containerPort: 8088
+            - containerPort: 50060

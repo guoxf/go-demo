@@ -43,7 +43,7 @@ KUBELET_API_SERVER="--api-servers=${MASTER_ADDRESS}:8080"
 KUBE_ALLOW_PRIV="--allow-privileged=false"
 
 # Add your own!
-KUBELET_ARGS="--pod-infra-container-image=docker.io/kubernetes/pause:latest"
+KUBELET_ARGS="--pod-infra-container-image=172.16.9.3:5000/kubernetes/pause:latest"
 EOF
 
 KUBE_PROXY_OPTS="   \${KUBE_LOGTOSTDERR}     \\
@@ -53,7 +53,7 @@ KUBE_PROXY_OPTS="   \${KUBE_LOGTOSTDERR}     \\
                     \${NODE_HOSTNAME}        \\
                     \${KUBELET_API_SERVER}   \\
                     \${KUBE_ALLOW_PRIV}      \\
-                    \${KUBELET_ARGS}"
+                    \${KUBELET_ARGS} --cluster_dns=10.10.10.188 --cluster_domain=plu.cn"
 
 cat <<EOF >/usr/lib/systemd/system/kubelet.service
 [Unit]
