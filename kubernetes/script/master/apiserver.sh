@@ -45,7 +45,7 @@ NODE_PORT="--kubelet-port=10250"
 KUBE_ADVERTISE_ADDR="--advertise-address=${MASTER_ADDRESS}"
 
 # --allow-privileged=false: If true, allow privileged containers.
-KUBE_ALLOW_PRIV="--allow-privileged=false"
+KUBE_ALLOW_PRIV="--allow-privileged=true"
 
 # --service-cluster-ip-range=<nil>: A CIDR notation IP range from which to assign service cluster IPs. 
 # This must not overlap with any IP ranges assigned to nodes for pods.

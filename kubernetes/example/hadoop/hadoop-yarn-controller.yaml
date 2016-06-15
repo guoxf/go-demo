@@ -1,0 +1,22 @@
+kind: ReplicationController
+apiVersion: v1
+metadata:
+  name: hadoop-yarn-controller
+  namespace: spark-cluster
+spec:
+  replicas: 1
+  selector:
+    component: hadoop-yarn
+  template:
+    metadata:
+      labels:
+        component: hadoop-yarn
+    spec:
+      containers:
+        - name: hadoop-master
+          image: 172.16.9.3:5000/guoxf/hadoop-master:0.1.0
+          securityContext:
+            privileged: true
+          # command: ["/root/start-hadoop.sh"]
+          ports:
+            - containerPort: 19888

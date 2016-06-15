@@ -40,7 +40,7 @@ NODE_HOSTNAME="--hostname-override=${NODE_ADDRESS}"
 KUBELET_API_SERVER="--api-servers=${MASTER_ADDRESS}:8080"
 
 # --allow-privileged=false: If true, allow containers to request privileged mode. [default=false]
-KUBE_ALLOW_PRIV="--allow-privileged=false"
+KUBE_ALLOW_PRIV="--allow-privileged=true"
 
 # Add your own!
 KUBELET_ARGS="--pod-infra-container-image=172.16.9.3:5000/kubernetes/pause:latest"

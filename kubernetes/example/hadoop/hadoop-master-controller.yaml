@@ -14,8 +14,10 @@ spec:
     spec:
       containers:
         - name: hadoop-master
-          image: 172.16.9.3:5000/kiwenlau/hadoop-master:0.1.0
-          command: ["/root/start-ssh-serf.sh"]
+          image: 172.16.9.3:5000/guoxf/hadoop-master:0.1.0
+          securityContext:
+            privileged: true
+          # command: ["/root/start-hadoop.sh"]
           ports:
             - containerPort: 7373
             - containerPort: 7946
