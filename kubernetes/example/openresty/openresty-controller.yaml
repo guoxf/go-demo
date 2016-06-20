@@ -1,0 +1,21 @@
+kind: ReplicationController
+apiVersion: v1
+metadata:
+  name: openresty-controller
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    component: openresty
+  template:
+    metadata:
+      labels:
+        component: openresty
+    spec:
+      containers:
+        - name: openresty
+          image: 172.16.9.3:5000/guoxf/openresty:1.9.15
+          # command: ["/root/nginx/start.sh"]
+          ports:
+            - containerPort: 80
+            - containerPort: 443

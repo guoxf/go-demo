@@ -1,0 +1,16 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: openresty
+  namespace: default
+spec:
+  ports:
+    - port: 80
+      protocol: TCP
+      name: http
+    - port: 443
+      protocol: TCP
+      name: https
+  type: NodePort
+  selector:
+    component: openresty
