@@ -70,3 +70,4 @@ kubernetes/bin/flanneld
 kubernetes/bin/etcdctl
 kubernetes/bin/etcd
 kubernetes/bin/kube-apiserver
+readip/17monipdb.dat

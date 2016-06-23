@@ -9,6 +9,6 @@ ENV NGINX_PATH /root/nginx
 COPY file/* /root/nginx/conf
 COPY start.sh /root/nginx/
 ADD openresty /usr/local/openresty
-EXPOSE 80 443
+EXPOSE 80 443 26379
 RUN chmod +x -R /root/nginx/
-CMD ["/usr/sbin/init"]
+CMD ["/usr/sbin/init  && /root/nginx/start.sh"]
