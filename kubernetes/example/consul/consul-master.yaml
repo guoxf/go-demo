@@ -1,0 +1,51 @@
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  # namespace: kube-system
+  name: consul-master
+spec:
+  replicas: 1
+  selector:
+    app: consul-master
+  template:
+    metadata:
+      labels:
+        app: consul-master
+    spec:
+      containers:
+        - name: consul-master
+          securityContext:
+            privileged: true
+          command: ["/bin/consul", "agent", "-server","-bootstrap", "-config-dir=/config","-data-dir=/data"]
+          image: 172.16.9.3:5000/guoxf/consul-server:0.6
+          imagePullPolicy: Always
+          ports:
+          - containerPort: 8500
+            name: ui-port
+          - containerPort: 8400
+            name: alt-port
+          - containerPort: 53
+            name: udp-port
+          - containerPort: 443
+            name: https-port
+          - containerPort: 8080
+            name: http-port
+          - containerPort: 8301
+            name: serflan
+          - containerPort: 8302
+            name: serfwan
+          - containerPort: 8600
+            name: consuldns
+          - containerPort: 8300
+            name: server
+          volumeMounts:
+          - mountPath: /config
+            name: consul-master
+          - mountPath: /data
+            name: consul-master
+      volumes:
+        - glusterfs:
+            endpoints: glusterfs-cluster
+            path: k8s-consul-master
+            readOnly: false
+          name: consul-master

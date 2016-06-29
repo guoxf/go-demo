@@ -2,10 +2,10 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: consul
+  name: consul-ui
   # namespace: kube-system
   labels:
-    name: consul
+    name: consul-ui
 spec:
   ports:
     # the port that this service should serve on
@@ -21,6 +21,7 @@ spec:
       port: 8300
     - name: consuldns
       port: 8600
+  type: NodePort
   # label keys and values that must match in order to receive traffic for this service
   selector:
-    app: consul-master
+    app: consul-ui
