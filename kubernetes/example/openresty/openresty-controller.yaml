@@ -15,8 +15,19 @@ spec:
       containers:
         - name: openresty
           image: 172.16.9.3:5000/guoxf/openresty:1.9.15
-          # command: ["/root/nginx/start.sh"]
+          # command: ["nginx","-p","/root/nginx/","-c","conf/nginx.conf"]
           ports:
-            - containerPort: 80
-            - containerPort: 443
-            - containerPort: 26379
+          - containerPort: 80
+          - containerPort: 443
+          - containerPort: 26379
+          volumeMounts:
+          - mountPath: /root/nginx
+            name: openresty-master
+      # 指定节点来部署
+      nodeName: 172.16.9.222
+      volumes:
+        - glusterfs:
+            endpoints: glusterfs-cluster
+            path: k8s-openresty-master
+            readOnly: false
+          name: openresty-master
