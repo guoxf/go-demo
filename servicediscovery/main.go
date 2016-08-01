@@ -9,7 +9,7 @@ import (
 
 const (
 	srvName   = "redis.service.consul"
-	agentAddr = "172.16.9.94:8600"
+	agentAddr = "127.0.0.1:8600"
 )
 
 func main() {

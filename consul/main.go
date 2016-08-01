@@ -9,7 +9,7 @@ import (
 func main() {
 	// Get a new client
 	config := api.DefaultConfig()
-	config.Address = "consul.plu.cn:32126"
+	config.Address = "127.0.0.1"
 	client, err := api.NewClient(config)
 	if err != nil {
 		panic(err)
